@@ -1,3 +1,6 @@
 package edu.karolinawidz.bestwishes.model
 
-data class Wish(val stringResourceId: Int)
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+
+data class Wish(@StringRes val stringResourceId: Int, @DrawableRes val imageResourceId: Int)
