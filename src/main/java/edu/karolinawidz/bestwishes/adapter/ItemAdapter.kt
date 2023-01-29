@@ -8,13 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
-import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.model.Picture
 
-class ItemAdapter(private val context: Context, private val data: List<Wish>) :
+class ItemAdapter(private val context: Context, private val data: List<Picture>) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.findViewById(R.id.wish_text)
-        val imageView: ImageView = view.findViewById(R.id.wish_image)
+        val textView: TextView = view.findViewById(R.id.picture_text)
+        val imageView: ImageView = view.findViewById(R.id.picture_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 class CardListTests {
 
     @get:Rule
-    val activity = ActivityScenarioRule(MainActivity::class.java)
+    val activity = ActivityScenarioRule(PictureActivity::class.java)
 
     @Test
     fun scroll_to_last(){
