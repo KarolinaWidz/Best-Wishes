@@ -3,8 +3,8 @@ package edu.karolinawidz.bestwishes.data
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
 
-class Datasource {
-    fun loadWishes(): List<Picture> {
+class PictureDatasource {
+    fun loadPictures(): List<Picture> {
         return listOf(
             Picture(R.string.birthday_picture1, R.drawable.birthday1),
             Picture(R.string.birthday_picture2, R.drawable.birthday2),

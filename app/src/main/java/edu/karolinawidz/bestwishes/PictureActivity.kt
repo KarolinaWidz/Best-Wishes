@@ -1,13 +1,11 @@
 package edu.karolinawidz.bestwishes
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import edu.karolinawidz.bestwishes.adapter.ItemAdapter
-import edu.karolinawidz.bestwishes.data.Datasource
+import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
+import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.databinding.ActivityPictureBinding
 
 class PictureActivity : AppCompatActivity() {
@@ -17,9 +15,9 @@ class PictureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPictureBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val dataset = Datasource().loadWishes()
+        val dataset = PictureDatasource().loadPictures()
         val recyclerView = binding.recyclerView
-        recyclerView.adapter = ItemAdapter(this, dataset)
+        recyclerView.adapter = PictureItemAdapter(this, dataset)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.setHasFixedSize(true)
         binding.nextButton.setOnClickListener {

@@ -7,7 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import edu.karolinawidz.bestwishes.adapter.ItemAdapter
+import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,7 +22,11 @@ class CardListTests {
     fun scroll_to_last(){
         val lastItemPosition = 13
         onView(withId(R.id.recycler_view))
-            .perform(RecyclerViewActions.scrollToPosition<ItemAdapter.ItemViewHolder>(lastItemPosition))
+            .perform(
+                RecyclerViewActions.scrollToPosition<PictureItemAdapter.ItemViewHolder>(
+                    lastItemPosition
+                )
+            )
         onView(withId(R.id.recycler_view))
             .check(matches(isDisplayed()))
     }

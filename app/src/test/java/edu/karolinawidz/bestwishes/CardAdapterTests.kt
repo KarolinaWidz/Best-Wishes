@@ -1,7 +1,7 @@
 package edu.karolinawidz.bestwishes
 
 import android.content.Context
-import edu.karolinawidz.bestwishes.adapter.ItemAdapter
+import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.model.Picture
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -20,6 +20,6 @@ class CardAdapterTests {
             Picture(R.string.birthday3, R.drawable.birthday3)
         )
 
-        assertEquals(data.size, ItemAdapter(context, data).itemCount)
+        assertEquals(data.size, PictureItemAdapter(context, data).itemCount)
     }
 }
