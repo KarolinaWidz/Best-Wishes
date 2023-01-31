@@ -36,48 +36,37 @@
             <ImageView
                 android:id="@+id/image_preview_picture"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:contentDescription="@string/selected_picture"
                 android:importantForAccessibility="yes"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/birthday1" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
-
-    <LinearLayout
-        android:id="@+id/select_wishes_layout"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/select_wishes_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="vertical"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="8dp"
+        android:text="Select wishes:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/preview_card" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
         android:scrollbars="vertical"
         app:layout_constrainedHeight="true"
-
-        app:layout_constraintTop_toBottomOf="@id/preview_card">
-
-        <TextView
-            android:id="@+id/select_wishes_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="8dp"
-            android:text="Select wishes:"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constrainedHeight="true"
-
-            />
-    </LinearLayout>
-
+        app:layout_constraintBottom_toTopOf="@+id/next_button"
+        app:layout_constraintTop_toBottomOf="@id/select_wishes_text" />
 
     <Button
         android:id="@+id/next_button"
