@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/pictureListFragment">
+
+    <fragment
+        android:id="@+id/pictureListFragment"
+        android:name="edu.karolinawidz.bestwishes.PictureListFragment"
+        android:label="fragment_picture_list"
+        tools:layout="@layout/fragment_picture_list">
+        <action
+            android:id="@+id/action_pictureListFragment_to_wishFragment"
+            app:destination="@id/wishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wishFragment"
+        android:name="edu.karolinawidz.bestwishes.WishFragment"
+        android:label="fragment_wish"
+        tools:layout="@layout/fragment_wish" />
+</navigation>
