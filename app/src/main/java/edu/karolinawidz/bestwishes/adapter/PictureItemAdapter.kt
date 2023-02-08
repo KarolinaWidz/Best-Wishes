@@ -13,7 +13,9 @@ import edu.karolinawidz.bestwishes.model.Picture
 
 class PictureItemAdapter(private val context: Context, private val data: List<Picture>) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var selectedItemPosition = -1
+
+    inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val radioButton: RadioButton = view.findViewById(R.id.picture_radio_button)
         val textView: TextView = view.findViewById(R.id.picture_text)
         val imageView: ImageView = view.findViewById(R.id.picture_image)
@@ -29,6 +31,13 @@ class PictureItemAdapter(private val context: Context, private val data: List<Pi
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
+        holder.radioButton.isChecked = position == selectedItemPosition
+        holder.radioButton.setOnClickListener {
+            val lastCheckedItemPosition = selectedItemPosition
+            selectedItemPosition = position
+            notifyItemChanged(selectedItemPosition)
+            notifyItemChanged(lastCheckedItemPosition)
+        }
     }
 
     override fun getItemCount() = data.size

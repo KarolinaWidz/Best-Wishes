@@ -18,5 +18,9 @@
         android:id="@+id/wishFragment"
         android:name="edu.karolinawidz.bestwishes.WishFragment"
         android:label="fragment_wish"
-        tools:layout="@layout/fragment_wish" />
+        tools:layout="@layout/fragment_wish">
+        <argument
+            android:name="pictureId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

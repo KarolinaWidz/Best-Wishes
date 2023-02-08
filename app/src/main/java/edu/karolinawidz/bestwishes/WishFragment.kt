@@ -16,7 +16,6 @@ class WishFragment : Fragment() {
     private var _binding: FragmentWishBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
