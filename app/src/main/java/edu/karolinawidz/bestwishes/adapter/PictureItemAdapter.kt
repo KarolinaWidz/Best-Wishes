@@ -1,6 +1,7 @@
 package edu.karolinawidz.bestwishes.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
 
+const val TAG = "PictureItemAdapter"
+
 class PictureItemAdapter(private val context: Context, private val data: List<Picture>) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
     var selectedItemPosition = -1
@@ -19,6 +22,7 @@ class PictureItemAdapter(private val context: Context, private val data: List<Pi
         val radioButton: RadioButton = view.findViewById(R.id.picture_radio_button)
         val textView: TextView = view.findViewById(R.id.picture_text)
         val imageView: ImageView = view.findViewById(R.id.picture_image)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -38,7 +42,18 @@ class PictureItemAdapter(private val context: Context, private val data: List<Pi
             notifyItemChanged(selectedItemPosition)
             notifyItemChanged(lastCheckedItemPosition)
         }
+
     }
 
     override fun getItemCount() = data.size
+
+    fun getImageFromPosition(): Int? {
+        return try {
+            Log.i(TAG, "Picture selected")
+            data[selectedItemPosition].imageResourceId
+        } catch (e: IndexOutOfBoundsException) {
+            Log.e(TAG, "No picture selected")
+            null
+        }
+    }
 }

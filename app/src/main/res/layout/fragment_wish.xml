@@ -37,7 +37,7 @@
                 android:layout_height="220dp"
                 android:contentDescription="@string/selected_picture"
                 android:importantForAccessibility="yes"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/birthday1" />
         </LinearLayout>
 
