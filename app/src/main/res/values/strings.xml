@@ -35,5 +35,7 @@
     <string name="previous">Previous</string>
     <string name="selected_picture">Selected picture</string>
     <string name="image_preview">Image preview:</string>
+    <string name="final_result_of_card">Final result of card</string>
+    <string name="result">Result:</string>
 
 </resources>

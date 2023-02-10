@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
 
-const val TAG = "PictureItemAdapter"
+private const val TAG = "PictureItemAdapter"
 
 class PictureItemAdapter(private val context: Context, private val data: List<Picture>) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
+
     var selectedItemPosition = -1
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {

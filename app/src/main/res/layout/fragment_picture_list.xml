@@ -39,6 +39,7 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/upload"
         android:src="@drawable/ic_upload_icon"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent" />
 

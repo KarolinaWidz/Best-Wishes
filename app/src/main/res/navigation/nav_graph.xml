@@ -22,5 +22,20 @@
         <argument
             android:name="pictureId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_wishFragment_to_finalCardFragment"
+            app:destination="@id/finalCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finalCardFragment"
+        android:name="edu.karolinawidz.bestwishes.FinalCardFragment"
+        android:label="fragment_final_card"
+        tools:layout="@layout/fragment_final_card">
+        <argument
+            android:name="pictureId"
+            app:argType="integer" />
+        <argument
+            android:name="wishId"
+            app:argType="integer" />
     </fragment>
 </navigation>
