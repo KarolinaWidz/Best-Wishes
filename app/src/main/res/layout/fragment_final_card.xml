@@ -38,7 +38,8 @@
                 android:layout_height="220dp"
                 android:contentDescription="@string/final_result_of_card"
                 android:importantForAccessibility="yes"
-                android:scaleType="centerCrop"
+                android:background="@color/design_default_color_secondary"
+                android:scaleType="fitCenter"
                 android:src="@drawable/birthday1" />
         </LinearLayout>
 

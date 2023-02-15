@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
+import edu.karolinawidz.bestwishes.utils.PictureGenerator
 
 private const val PICTURE_ID = "pictureId"
 private const val WISH_ID = "wishId"
@@ -37,4 +38,13 @@ class FinalCardFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.imageFinalPicture.setImageBitmap(
+            PictureGenerator.createCardBase(
+                requireContext(),
+                pictureId
+            )
+        )
+    }
 }
