@@ -5,6 +5,7 @@ import android.graphics.*
 import android.text.StaticLayout
 import android.text.TextPaint
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import edu.karolinawidz.bestwishes.R
 import kotlin.math.roundToInt
 
@@ -12,7 +13,7 @@ class PictureGenerator {
 
     companion object {
         private const val HEADING_FONT_SIZE = 60F
-        private const val FONT_SIZE = 40F
+        private const val FONT_SIZE = 50F
         private const val MARGIN = 20
         private const val HORIZONTAL_MARGIN = 40
         private const val HEADING_HEIGHT = 60F
@@ -28,7 +29,7 @@ class PictureGenerator {
             val textPaint = TextPaint().apply {
                 textAlign = Paint.Align.CENTER
                 textSize = HEADING_FONT_SIZE
-                typeface = Typeface.MONOSPACE
+                typeface = ResourcesCompat.getFont(context, R.font.card_firstschool)
                 color = ContextCompat.getColor(context, R.color.final_font_color)
             }
 

@@ -17,7 +17,7 @@ class FinalCardFragment : Fragment() {
     private var _wishId: Int? = null
     private var _binding: FragmentFinalCardBinding? = null
     private val pictureId get() = _pictureId!!
-    val wishId get() = _wishId!!
+    private val wishId get() = _wishId!!
     private val binding get() = _binding!!
 
 
