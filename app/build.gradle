@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "edu.karolinawidz.bestwishes"
-        minSdk 19
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"

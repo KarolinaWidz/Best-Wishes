@@ -2,6 +2,8 @@ package edu.karolinawidz.bestwishes.utils
 
 import android.content.Context
 import android.graphics.*
+import android.text.StaticLayout
+import android.text.TextPaint
 import androidx.core.content.ContextCompat
 import edu.karolinawidz.bestwishes.R
 import kotlin.math.roundToInt
@@ -9,45 +11,73 @@ import kotlin.math.roundToInt
 class PictureGenerator {
 
     companion object {
+        private const val HEADING_FONT_SIZE = 60F
         private const val FONT_SIZE = 40F
-        private const val MARGIN = 10
+        private const val MARGIN = 20
         private const val HORIZONTAL_MARGIN = 40
+        private const val HEADING_HEIGHT = 60F
+        private const val PICTURE_HEIGHT = 1800
+        private const val PICTURE_WIDTH = 1000
 
-        fun createCardBase(context: Context, drawableId: Int): Bitmap? {
+        fun createCardBase(context: Context, drawableId: Int, stringId: Int): Bitmap? {
             val bitmap = BitmapFactory.decodeResource(context.resources, drawableId)
-            val resultBitmap = Bitmap.createBitmap(700, 500, bitmap.config)
-            val canvas = Canvas(resultBitmap)
+            val temporaryBitmap = Bitmap.createBitmap(PICTURE_WIDTH, PICTURE_HEIGHT, bitmap.config)
+            val canvas = Canvas(temporaryBitmap)
             canvas.drawColor(Color.WHITE)
 
-
-            val textPaint = Paint().apply {
+            val textPaint = TextPaint().apply {
                 textAlign = Paint.Align.CENTER
-                textSize = FONT_SIZE
+                textSize = HEADING_FONT_SIZE
                 typeface = Typeface.MONOSPACE
                 color = ContextCompat.getColor(context, R.color.final_font_color)
             }
+
             val headingString = context.resources.getString(R.string.happy_birthday_text)
-            val testRect = Rect()
-            textPaint.getTextBounds(headingString, 0, headingString.lastIndex, testRect)
-            val fm = textPaint.fontMetrics
-            val height = (fm.descent - fm.ascent).roundToInt()
+            val pictureHeight =
+                (HEADING_HEIGHT + textPaint.fontMetrics.bottom + MARGIN).roundToInt()
 
             canvas.drawText(
                 headingString,
                 canvas.width / 2F,
-                height.toFloat(),
+                HEADING_HEIGHT,
                 textPaint
             )
+
             canvas.drawBitmap(
                 bitmap,
                 null,
                 Rect(
                     HORIZONTAL_MARGIN,
-                    height + MARGIN, canvas.width - HORIZONTAL_MARGIN, canvas.height
+                    pictureHeight,
+                    canvas.width - HORIZONTAL_MARGIN,
+                    canvas.width * 3 / 4
                 ),
                 Paint()
             )
-            return resultBitmap
+
+            textPaint.textSize = FONT_SIZE
+            val text = context.resources.getText(stringId)
+            val textLayout = StaticLayout.Builder.obtain(
+                text,
+                0,
+                text.lastIndex,
+                textPaint,
+                canvas.width - 2 * HORIZONTAL_MARGIN
+            ).build()
+
+            canvas.save()
+            val y = canvas.width * 3 / 4F + MARGIN
+            canvas.translate(canvas.width / 2F, y)
+            textLayout.draw(canvas)
+            canvas.restore()
+            val finalSize = (y + MARGIN + textLayout.height).roundToInt()
+
+            return Bitmap.createBitmap(
+                temporaryBitmap, 0, 0,
+                PICTURE_WIDTH,
+                finalSize,
+                null, false
+            )
         }
     }
 }

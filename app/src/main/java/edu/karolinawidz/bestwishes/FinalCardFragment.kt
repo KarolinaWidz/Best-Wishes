@@ -43,7 +43,8 @@ class FinalCardFragment : Fragment() {
         binding.imageFinalPicture.setImageBitmap(
             PictureGenerator.createCardBase(
                 requireContext(),
-                pictureId
+                pictureId,
+                wishId
             )
         )
     }
