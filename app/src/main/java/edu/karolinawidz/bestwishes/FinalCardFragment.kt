@@ -13,19 +13,17 @@ private const val WISH_ID = "wishId"
 
 class FinalCardFragment : Fragment() {
 
-    private var _pictureId: Int? = null
-    private var _wishId: Int? = null
+    private var pictureId = 0
+    private var wishId = 0
     private var _binding: FragmentFinalCardBinding? = null
-    private val pictureId get() = _pictureId!!
-    private val wishId get() = _wishId!!
     private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _pictureId = it.getInt(PICTURE_ID)
-            _wishId = it.getInt(WISH_ID)
+            pictureId = it.getInt(PICTURE_ID)
+            wishId = it.getInt(WISH_ID)
         }
     }
 

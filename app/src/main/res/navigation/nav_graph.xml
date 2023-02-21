@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/pictureListFragment"
         android:name="edu.karolinawidz.bestwishes.PictureListFragment"
-        android:label="fragment_picture_list"
+        android:label="@string/choose_picture"
         tools:layout="@layout/fragment_picture_list">
         <action
             android:id="@+id/action_pictureListFragment_to_wishFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/wishFragment"
         android:name="edu.karolinawidz.bestwishes.WishFragment"
-        android:label="fragment_wish"
+        android:label="@string/choose_wish"
         tools:layout="@layout/fragment_wish">
         <argument
             android:name="pictureId"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/finalCardFragment"
         android:name="edu.karolinawidz.bestwishes.FinalCardFragment"
-        android:label="fragment_final_card"
+        android:label="@string/final_result"
         tools:layout="@layout/fragment_final_card">
         <argument
             android:name="pictureId"

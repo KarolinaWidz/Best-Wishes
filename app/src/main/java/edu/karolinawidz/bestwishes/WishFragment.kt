@@ -15,17 +15,18 @@ import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.databinding.FragmentWishBinding
 
 private const val PICTURE_ID = "pictureId"
+
 class WishFragment : Fragment() {
 
     private var _binding: FragmentWishBinding? = null
     private val binding get() = _binding!!
-    private var _pictureId: Int? = null
-    private val pictureId get() = _pictureId!!
+    private var pictureId = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _pictureId = it.getInt(PICTURE_ID)
+            pictureId = it.getInt(PICTURE_ID)
         }
     }
 
@@ -34,36 +35,51 @@ class WishFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishBinding.inflate(inflater, container, false)
-        val data = WishDatasource().loadWishes()
-        val recyclerView = binding.recyclerView
-        val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
-        itemAnimator.supportsChangeAnimations = false
-        val adapter = WishItemAdapter(requireContext(), data)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.imagePreviewPicture.setImageResource(pictureId)
-        binding.nextButton.setOnClickListener {
-            if (adapter.selectedItemPosition != -1) {
-                it.findNavController()
-                    .navigate(
-                        WishFragmentDirections.actionWishFragmentToFinalCardFragment(
-                            pictureId,
-                            adapter.getWishFromPosition()!!
-                        )
-                    )
-            } else {
-                val toast =
-                    Toast.makeText(requireContext(), "No wish selected", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.BOTTOM, 0, 220)
-                toast.show()
-            }
-        }
+        initData()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.nextButton.setOnClickListener {
+            goToNextScreen(it, binding.recyclerView.adapter as WishItemAdapter)
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initData() {
+        val recyclerView = binding.recyclerView
+        val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
+        itemAnimator.supportsChangeAnimations = false
+        recyclerView.adapter = WishItemAdapter(requireContext(), WishDatasource().loadWishes())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.imagePreviewPicture.setImageResource(pictureId)
+    }
+
+    private fun goToNextScreen(view: View, adapter: WishItemAdapter) {
+        if (adapter.selectedItemPosition != -1) {
+            view.findNavController()
+                .navigate(
+                    WishFragmentDirections.actionWishFragmentToFinalCardFragment(
+                        pictureId,
+                        adapter.getWishFromPosition()!!
+                    )
+                )
+        } else {
+            showNoWishSelectedToast()
+        }
+    }
+
+    private fun showNoWishSelectedToast() {
+        val toast =
+            Toast.makeText(requireContext(), "No wish selected", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.BOTTOM, 0, 220)
+        toast.show()
     }
 
 }

@@ -19,41 +19,54 @@ class PictureListFragment : Fragment() {
     private var _binding: FragmentPictureListBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPictureListBinding.inflate(inflater, container, false)
-
-        val dataset = PictureDatasource().loadPictures()
-        val recyclerView = binding.recyclerView
-        val adapter = PictureItemAdapter(requireContext(), dataset)
-        val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
-        itemAnimator.supportsChangeAnimations = false
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        binding.nextButton.setOnClickListener {
-            if (adapter.selectedItemPosition != -1) {
-                it.findNavController()
-                    .navigate(
-                        PictureListFragmentDirections.actionPictureListFragmentToWishFragment(
-                            pictureId = adapter.getImageFromPosition()!!
-                        )
-                    )
-            } else {
-                val toast =
-                    Toast.makeText(requireContext(), "No picture selected", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.BOTTOM, 0, 220)
-                toast.show()
-            }
-        }
+        initRecyclerView()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.nextButton.setOnClickListener {
+            goToNextScreen(it, binding.recyclerView.adapter as PictureItemAdapter)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun initRecyclerView() {
+        val recyclerView = binding.recyclerView
+        val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
+        itemAnimator.supportsChangeAnimations = false
+        recyclerView.adapter =
+            PictureItemAdapter(requireContext(), PictureDatasource().loadPictures())
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+    }
+
+    private fun goToNextScreen(view: View, adapter: PictureItemAdapter) {
+        if (adapter.selectedItemPosition != -1) {
+            view.findNavController()
+                .navigate(
+                    PictureListFragmentDirections.actionPictureListFragmentToWishFragment(
+                        pictureId = adapter.getImageFromPosition()!!
+                    )
+                )
+        } else {
+            showNoPictureSelectedToast()
+        }
+    }
+
+    private fun showNoPictureSelectedToast() {
+        val toast = Toast.makeText(requireContext(), "No picture selected", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.BOTTOM, 0, 220)
+        toast.show()
+    }
+
+
 }
