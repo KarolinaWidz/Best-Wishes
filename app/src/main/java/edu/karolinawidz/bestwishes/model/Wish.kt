@@ -1,3 +1,5 @@
 package edu.karolinawidz.bestwishes.model
 
-data class Wish(val stringResourceId: Int)
+import edu.karolinawidz.bestwishes.enum.CardType
+
+data class Wish(val stringResourceId: Int, val type: CardType)

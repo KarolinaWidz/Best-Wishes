@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.utils
+package edu.karolinawidz.bestwishes.util
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.utils
+package edu.karolinawidz.bestwishes.util
 
 import android.content.Context
 import android.graphics.*
@@ -20,7 +20,12 @@ class PictureGenerator {
         private const val PICTURE_HEIGHT = 1800
         private const val PICTURE_WIDTH = 1000
 
-        fun createCardBase(context: Context, drawableId: Int, stringId: Int): Bitmap? {
+        fun createCardBase(
+            context: Context,
+            drawableId: Int,
+            stringId: Int,
+            heading: String
+        ): Bitmap? {
             val bitmap = BitmapFactory.decodeResource(context.resources, drawableId)
             val temporaryBitmap = Bitmap.createBitmap(PICTURE_WIDTH, PICTURE_HEIGHT, bitmap.config)
             val canvas = Canvas(temporaryBitmap)
@@ -33,12 +38,11 @@ class PictureGenerator {
                 color = ContextCompat.getColor(context, R.color.final_font_color)
             }
 
-            val headingString = context.resources.getString(R.string.happy_birthday_text)
             val pictureHeight =
                 (HEADING_HEIGHT + textPaint.fontMetrics.bottom + MARGIN).roundToInt()
 
             canvas.drawText(
-                headingString,
+                heading,
                 canvas.width / 2F,
                 HEADING_HEIGHT,
                 textPaint

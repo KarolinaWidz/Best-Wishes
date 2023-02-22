@@ -26,6 +26,16 @@
     <string name="birthday_picture11">Stones</string>
     <string name="birthday_picture12">Birthday cake 2</string>
     <string name="birthday_picture13">Balloons</string>
+    <string name="anniversary1">To the most beautiful woman who has given me the most beautiful life, a very happy anniversary.</string>
+    <string name="anniversary2">Every love story is special, unique and beautiful—but ours is my favorite.</string>
+    <string name="anniversary3">When a love is true, there is no ending. I hope we get to celebrate for many years to come. Happy anniversary!</string>
+    <string name="anniversary4">I want to love you, adore you, take care of you and make you the happiest person there ever was for all of time.</string>
+    <string name="anniversary5">I didn\'t think it was possible to love you any more than I did the day I married you, but somehow my love only grows. I love you today and always.</string>
+    <string name="anniversary_picture1">Cups</string>
+    <string name="anniversary_picture2">Wedding couple</string>
+    <string name="anniversary_picture3">Elderly couple</string>
+    <string name="anniversary_picture4">Teddy bears</string>
+    <string name="anniversary_picture5">Sunshine</string>
     <string name="next">Next</string>
     <string name="upload">Upload a photo</string>
     <string name="title_activity_main2">MainActivity2</string>
@@ -39,8 +49,12 @@
     <string name="result">Result:</string>
     <string name="happy_birthday_text">Happy Birthday!</string>
     <string name="start_over">Start over</string>
-    <string name="choose_picture">Choose picture</string>
-    <string name="choose_wish">Choose wish</string>
-    <string name="final_result">Final result</string>
+    <string name="select_picture">Select picture:</string>
+    <string name="adjust_wishes">Adjust wishes:</string>
+    <string name="final_results">Final results:</string>
+    <string name="create_birthday_card">Create birthday card</string>
+    <string name="select_wish">Select wish:</string>
+    <string name="create_anniversary_card">Create anniversary card</string>
+    <string name="exit">Exit</string>
 
 </resources>
