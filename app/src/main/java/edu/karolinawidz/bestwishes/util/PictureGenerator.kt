@@ -20,7 +20,7 @@ class PictureGenerator {
         private const val PICTURE_HEIGHT = 1800
         private const val PICTURE_WIDTH = 1000
 
-        fun createCardBase(
+        fun createCard(
             context: Context,
             drawableId: Int,
             stringId: Int,

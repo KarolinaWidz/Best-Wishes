@@ -1,6 +1,5 @@
-package edu.karolinawidz.bestwishes
+package edu.karolinawidz.bestwishes.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -8,31 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
-import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.model.Picture
+import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 
 class PictureListFragment : Fragment() {
     companion object {
-        private const val CARD_TYPE = "cardType"
+        private const val TOAST_OFFSET_X = 0
+        private const val TOAST_OFFSET_Y = 220
     }
 
+    private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentPictureListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var cardType: CardType
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            cardType = getArguments(it)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +42,7 @@ class PictureListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.nextButton.setOnClickListener {
-            goToNextScreen(it, binding.recyclerView.adapter as PictureItemAdapter)
+            goToNextScreen(binding.recyclerView.adapter as PictureItemAdapter)
         }
     }
 
@@ -55,37 +51,23 @@ class PictureListFragment : Fragment() {
         _binding = null
     }
 
-    private fun getArguments(bundle: Bundle): CardType {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getSerializable(CARD_TYPE, CardType::class.java)!!
-        } else {
-            @Suppress("DEPRECATION")
-            bundle.getSerializable(CARD_TYPE) as CardType
-        }
-    }
-
     private fun initData() {
-        requireActivity().title = getString(R.string.select_picture)
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
-            PictureItemAdapter(requireContext(), loadPictureData(cardType))
+            PictureItemAdapter(requireContext(), loadPictureData())
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
-    private fun loadPictureData(type: CardType): List<Picture> {
-        return PictureDatasource().loadPictures().filter { it.type == type }
+    private fun loadPictureData(): List<Picture> {
+        return cardViewModel.filterPictureData(PictureDatasource())
     }
 
-    private fun goToNextScreen(view: View, adapter: PictureItemAdapter) {
+    private fun goToNextScreen(adapter: PictureItemAdapter) {
         if (adapter.selectedItemPosition != -1) {
-            view.findNavController()
-                .navigate(
-                    PictureListFragmentDirections.actionPictureListFragmentToWishFragment(
-                        pictureId = adapter.getImageFromPosition()!!, cardType = cardType
-                    )
-                )
+            cardViewModel.setSelectedPictureId(adapter.getImageFromPosition()!!)
+            findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
             showNoPictureSelectedToast()
         }
@@ -93,7 +75,7 @@ class PictureListFragment : Fragment() {
 
     private fun showNoPictureSelectedToast() {
         val toast = Toast.makeText(requireContext(), "No picture selected", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.BOTTOM, 0, 220)
+        toast.setGravity(Gravity.BOTTOM, TOAST_OFFSET_X, TOAST_OFFSET_Y)
         toast.show()
     }
 

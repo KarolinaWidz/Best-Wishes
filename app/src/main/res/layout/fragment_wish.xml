@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="20dp"
-    tools:context=".WishFragment">
+    tools:context=".ui.WishFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/preview_card"
