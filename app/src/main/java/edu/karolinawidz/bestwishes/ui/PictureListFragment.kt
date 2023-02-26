@@ -56,7 +56,7 @@ class PictureListFragment : Fragment() {
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
-            PictureItemAdapter(requireContext(), loadPictureData())
+            PictureItemAdapter(cardViewModel, requireContext(), loadPictureData())
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
@@ -65,7 +65,7 @@ class PictureListFragment : Fragment() {
     }
 
     private fun goToNextScreen(adapter: PictureItemAdapter) {
-        if (adapter.selectedItemPosition != -1) {
+        if (cardViewModel.selectedPictureId.value != -1) {
             cardViewModel.setSelectedPictureId(adapter.getImageFromPosition()!!)
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {

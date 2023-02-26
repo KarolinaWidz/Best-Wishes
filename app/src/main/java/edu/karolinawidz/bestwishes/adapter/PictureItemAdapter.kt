@@ -11,13 +11,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
+import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 private const val TAG = "PictureItemAdapter"
 
-class PictureItemAdapter(private val context: Context, private val data: List<Picture>) :
+class PictureItemAdapter(
+    private val viewModel: CardViewModel,
+    private val context: Context,
+    private val data: List<Picture>
+) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
-
-    var selectedItemPosition = -1
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val radioButton: RadioButton = view.findViewById(R.id.picture_radio_button)
@@ -36,14 +39,13 @@ class PictureItemAdapter(private val context: Context, private val data: List<Pi
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
-        holder.radioButton.isChecked = position == selectedItemPosition
+        holder.radioButton.isChecked = position == viewModel.selectedPictureId.value
         holder.radioButton.setOnClickListener {
-            val lastCheckedItemPosition = selectedItemPosition
-            selectedItemPosition = position
-            notifyItemChanged(selectedItemPosition)
+            val lastCheckedItemPosition = viewModel.selectedPictureId.value!!
+            viewModel.setSelectedPictureId(position)
+            notifyItemChanged(position)
             notifyItemChanged(lastCheckedItemPosition)
         }
-
     }
 
     override fun getItemCount() = data.size
@@ -51,7 +53,7 @@ class PictureItemAdapter(private val context: Context, private val data: List<Pi
     fun getImageFromPosition(): Int? {
         return try {
             Log.i(TAG, "Picture selected")
-            data[selectedItemPosition].imageResourceId
+            data[viewModel.selectedPictureId.value!!].imageResourceId
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
             null

@@ -10,13 +10,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 private const val TAG = "WishItemAdapter"
 
-class WishItemAdapter(private val context: Context, private val data: List<Wish>) :
+class WishItemAdapter(
+    private val viewModel: CardViewModel,
+    private val context: Context,
+    private val data: List<Wish>
+) :
     RecyclerView.Adapter<WishItemAdapter.ItemViewHolder>() {
-
-    var selectedItemPosition = -1
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val radioButton: RadioButton = itemView.findViewById(R.id.wish_radio_button)
@@ -32,12 +35,12 @@ class WishItemAdapter(private val context: Context, private val data: List<Wish>
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
-        holder.radioButton.isChecked = selectedItemPosition == position
+        holder.radioButton.isChecked = viewModel.selectedWishId.value == position
         holder.radioButton.setOnClickListener {
-            val previousPosition = selectedItemPosition
-            selectedItemPosition = position
+            val previousPosition = viewModel.selectedWishId.value!!
+            viewModel.setSelectedWishId(position)
             notifyItemChanged(previousPosition)
-            notifyItemChanged(selectedItemPosition)
+            notifyItemChanged(position)
 
         }
     }
@@ -47,7 +50,7 @@ class WishItemAdapter(private val context: Context, private val data: List<Wish>
     fun getWishFromPosition(): Int? {
         return try {
             Log.i(TAG, "Wish selected")
-            data[selectedItemPosition].stringResourceId
+            data[viewModel.selectedWishId.value!!].stringResourceId
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No wish selected")
             null

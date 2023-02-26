@@ -52,7 +52,7 @@ class WishFragment : Fragment() {
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
-        recyclerView.adapter = WishItemAdapter(requireContext(), loadWishesData())
+        recyclerView.adapter = WishItemAdapter(cardViewModel, requireContext(), loadWishesData())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.imagePreviewPicture.setImageResource(cardViewModel.selectedPictureId.value!!)
     }
@@ -62,7 +62,7 @@ class WishFragment : Fragment() {
     }
 
     private fun goToNextScreen(adapter: WishItemAdapter) {
-        if (adapter.selectedItemPosition != -1) {
+        if (cardViewModel.selectedWishId.value != -1) {
             cardViewModel.setSelectedWishId(adapter.getWishFromPosition()!!)
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
