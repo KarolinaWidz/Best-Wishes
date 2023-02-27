@@ -65,7 +65,7 @@ class PictureListFragment : Fragment() {
     }
 
     private fun goToNextScreen(adapter: PictureItemAdapter) {
-        if (cardViewModel.selectedPictureId.value != -1) {
+        if (cardViewModel.selectedPictureId != -1) {
             cardViewModel.setSelectedPictureId(adapter.getImageFromPosition()!!)
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {

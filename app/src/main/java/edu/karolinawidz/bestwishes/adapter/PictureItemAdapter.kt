@@ -39,9 +39,9 @@ class PictureItemAdapter(
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
-        holder.radioButton.isChecked = position == viewModel.selectedPictureId.value
+        holder.radioButton.isChecked = position == viewModel.selectedPictureId
         holder.radioButton.setOnClickListener {
-            val lastCheckedItemPosition = viewModel.selectedPictureId.value!!
+            val lastCheckedItemPosition = viewModel.selectedPictureId
             viewModel.setSelectedPictureId(position)
             notifyItemChanged(position)
             notifyItemChanged(lastCheckedItemPosition)
@@ -53,7 +53,7 @@ class PictureItemAdapter(
     fun getImageFromPosition(): Int? {
         return try {
             Log.i(TAG, "Picture selected")
-            data[viewModel.selectedPictureId.value!!].imageResourceId
+            data[viewModel.selectedPictureId].imageResourceId
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
             null

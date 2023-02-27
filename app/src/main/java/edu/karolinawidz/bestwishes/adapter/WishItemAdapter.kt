@@ -35,9 +35,9 @@ class WishItemAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
-        holder.radioButton.isChecked = viewModel.selectedWishId.value == position
+        holder.radioButton.isChecked = viewModel.selectedWishId == position
         holder.radioButton.setOnClickListener {
-            val previousPosition = viewModel.selectedWishId.value!!
+            val previousPosition = viewModel.selectedWishId
             viewModel.setSelectedWishId(position)
             notifyItemChanged(previousPosition)
             notifyItemChanged(position)
@@ -50,7 +50,7 @@ class WishItemAdapter(
     fun getWishFromPosition(): Int? {
         return try {
             Log.i(TAG, "Wish selected")
-            data[viewModel.selectedWishId.value!!].stringResourceId
+            data[viewModel.selectedWishId].stringResourceId
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No wish selected")
             null

@@ -1,7 +1,5 @@
 package edu.karolinawidz.bestwishes.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
@@ -10,33 +8,33 @@ import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.model.Wish
 
 class CardViewModel : ViewModel() {
-    private val _selectedPictureId = MutableLiveData(-1)
-    val selectedPictureId: LiveData<Int> get() = _selectedPictureId
+    private var _selectedPictureId = -1
+    val selectedPictureId get() = _selectedPictureId
 
-    private val _selectedWishId = MutableLiveData(-1)
-    val selectedWishId: LiveData<Int> get() = _selectedWishId
+    private var _selectedWishId = -1
+    val selectedWishId get() = _selectedWishId
 
-    private val _cardType = MutableLiveData<CardType>()
-    val cardType: LiveData<CardType> get() = _cardType
+    private lateinit var _cardType: CardType
+    val cardType get() = _cardType
 
     fun setSelectedPictureId(id: Int) {
-        _selectedPictureId.value = id
+        _selectedPictureId = id
     }
 
     fun setSelectedWishId(id: Int) {
-        _selectedWishId.value = id
+        _selectedWishId = id
     }
 
     fun setCardType(cardType: CardType) {
-        _cardType.value = cardType
+        _cardType = cardType
     }
 
     fun filterPictureData(pictureDatasource: PictureDatasource): List<Picture> {
-        return pictureDatasource.loadPictures().filter { it.type == cardType.value }
+        return pictureDatasource.loadPictures().filter { it.type == cardType }
     }
 
     fun filterWishesData(wishDatasource: WishDatasource): List<Wish> {
-        return wishDatasource.loadWishes().filter { it.type == cardType.value }
+        return wishDatasource.loadWishes().filter { it.type == cardType }
     }
 
 }

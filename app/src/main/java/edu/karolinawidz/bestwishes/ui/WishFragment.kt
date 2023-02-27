@@ -54,7 +54,7 @@ class WishFragment : Fragment() {
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter = WishItemAdapter(cardViewModel, requireContext(), loadWishesData())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.imagePreviewPicture.setImageResource(cardViewModel.selectedPictureId.value!!)
+        binding.imagePreviewPicture.setImageResource(cardViewModel.selectedPictureId)
     }
 
     private fun loadWishesData(): List<Wish> {
@@ -62,7 +62,7 @@ class WishFragment : Fragment() {
     }
 
     private fun goToNextScreen(adapter: WishItemAdapter) {
-        if (cardViewModel.selectedWishId.value != -1) {
+        if (cardViewModel.selectedWishId != -1) {
             cardViewModel.setSelectedWishId(adapter.getWishFromPosition()!!)
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
