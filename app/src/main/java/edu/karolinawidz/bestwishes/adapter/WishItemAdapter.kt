@@ -47,13 +47,12 @@ class WishItemAdapter(
 
     override fun getItemCount() = data.size
 
-    fun getWishFromPosition(): Int? {
-        return try {
+    fun setWishFromPosition() {
+        try {
             Log.i(TAG, "Wish selected")
-            data[viewModel.selectedWishId].stringResourceId
+            viewModel.setSelectedWishId(data[viewModel.selectedWishId].stringResourceId)
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No wish selected")
-            null
         }
     }
 

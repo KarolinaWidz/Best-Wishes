@@ -50,13 +50,12 @@ class PictureItemAdapter(
 
     override fun getItemCount() = data.size
 
-    fun getImageFromPosition(): Int? {
-        return try {
+    fun setImageFromPosition() {
+        try {
             Log.i(TAG, "Picture selected")
-            data[viewModel.selectedPictureId].imageResourceId
+            viewModel.setSelectedPictureId(data[viewModel.selectedPictureId].imageResourceId)
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
-            null
         }
     }
 }

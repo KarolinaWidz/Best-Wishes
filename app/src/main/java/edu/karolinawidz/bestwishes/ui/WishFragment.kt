@@ -63,7 +63,7 @@ class WishFragment : Fragment() {
 
     private fun goToNextScreen(adapter: WishItemAdapter) {
         if (cardViewModel.selectedWishId != -1) {
-            cardViewModel.setSelectedWishId(adapter.getWishFromPosition()!!)
+            adapter.setWishFromPosition()
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
             showNoWishSelectedToast()
