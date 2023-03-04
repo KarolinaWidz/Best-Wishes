@@ -40,7 +40,7 @@ class WishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.nextButton.setOnClickListener { goToNextScreen(binding.recyclerView.adapter as WishItemAdapter) }
+        binding.nextButton.setOnClickListener { goToNextScreen() }
     }
 
     override fun onDestroyView() {
@@ -51,19 +51,21 @@ class WishFragment : Fragment() {
     private fun initData() {
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
+        cardViewModel.setWishData(loadWishesData())
         itemAnimator.supportsChangeAnimations = false
-        recyclerView.adapter = WishItemAdapter(cardViewModel, requireContext(), loadWishesData())
+        recyclerView.adapter =
+            WishItemAdapter(cardViewModel, requireContext(), cardViewModel.wishData)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.imagePreviewPicture.setImageResource(cardViewModel.selectedPictureId)
+        binding.imagePreviewPicture.setImageResource(cardViewModel.pictureResourceId)
     }
 
     private fun loadWishesData(): List<Wish> {
         return cardViewModel.filterWishesData(WishDatasource())
     }
 
-    private fun goToNextScreen(adapter: WishItemAdapter) {
+    private fun goToNextScreen() {
         if (cardViewModel.selectedWishId != -1) {
-            adapter.setWishFromPosition()
+            cardViewModel.getWishFromPosition()
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
             showNoWishSelectedToast()

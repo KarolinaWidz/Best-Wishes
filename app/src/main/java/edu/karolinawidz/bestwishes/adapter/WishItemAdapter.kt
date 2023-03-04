@@ -1,7 +1,6 @@
 package edu.karolinawidz.bestwishes.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Wish
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
-
-private const val TAG = "WishItemAdapter"
 
 class WishItemAdapter(
     private val viewModel: CardViewModel,
@@ -41,19 +38,9 @@ class WishItemAdapter(
             viewModel.setSelectedWishId(position)
             notifyItemChanged(previousPosition)
             notifyItemChanged(position)
-
         }
     }
 
     override fun getItemCount() = data.size
-
-    fun setWishFromPosition() {
-        try {
-            Log.i(TAG, "Wish selected")
-            viewModel.setSelectedWishId(data[viewModel.selectedWishId].stringResourceId)
-        } catch (e: IndexOutOfBoundsException) {
-            Log.e(TAG, "No wish selected")
-        }
-    }
 
 }

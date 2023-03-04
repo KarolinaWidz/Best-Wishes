@@ -42,7 +42,7 @@ class PictureListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.nextButton.setOnClickListener {
-            goToNextScreen(binding.recyclerView.adapter as PictureItemAdapter)
+            goToNextScreen()
         }
     }
 
@@ -54,9 +54,10 @@ class PictureListFragment : Fragment() {
     private fun initData() {
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
+        cardViewModel.setPictureData(loadPictureData())
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
-            PictureItemAdapter(cardViewModel, requireContext(), loadPictureData())
+            PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
@@ -64,9 +65,9 @@ class PictureListFragment : Fragment() {
         return cardViewModel.filterPictureData(PictureDatasource())
     }
 
-    private fun goToNextScreen(adapter: PictureItemAdapter) {
+    private fun goToNextScreen() {
         if (cardViewModel.selectedPictureId != -1) {
-            adapter.setImageFromPosition()
+            cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
             showNoPictureSelectedToast()
@@ -78,6 +79,4 @@ class PictureListFragment : Fragment() {
         toast.setGravity(Gravity.BOTTOM, TOAST_OFFSET_X, TOAST_OFFSET_Y)
         toast.show()
     }
-
-
 }

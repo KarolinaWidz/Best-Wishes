@@ -23,7 +23,6 @@ class FinalCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFinalCardBinding.inflate(inflater, container, false)
-        binding.imageFinalPicture.setImageResource(cardViewModel.selectedPictureId)
         return binding.root
     }
 
@@ -32,12 +31,13 @@ class FinalCardFragment : Fragment() {
         binding.imageFinalPicture.setImageBitmap(
             PictureGenerator.createCard(
                 requireContext(),
-                cardViewModel.selectedPictureId,
-                cardViewModel.selectedWishId,
+                cardViewModel.pictureResourceId,
+                cardViewModel.wishResourceId,
                 cardViewModel.cardType.heading
             )
         )
         binding.startOverButton.setOnClickListener {
+            cardViewModel.clearData()
             view.findNavController()
                 .navigate(FinalCardFragmentDirections.actionFinalCardFragmentToMenuFragment())
         }

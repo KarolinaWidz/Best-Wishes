@@ -28,6 +28,7 @@ class MenuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cardViewModel.clearData()
         binding.birthdayCardButton.setOnClickListener { navigateToNext(CardType.BIRTHDAY) }
         binding.anniversaryCardButton.setOnClickListener { navigateToNext(CardType.ANNIVERSARY) }
     }
