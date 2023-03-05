@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
 import edu.karolinawidz.bestwishes.util.PictureGenerator
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
@@ -28,6 +29,10 @@ class FinalCardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            lifecycleOwner = lifecycleOwner
+            finalCardFragment = this@FinalCardFragment
+        }
         binding.imageFinalPicture.setImageBitmap(
             PictureGenerator.createCard(
                 requireContext(),
@@ -36,11 +41,15 @@ class FinalCardFragment : Fragment() {
                 cardViewModel.cardType.heading
             )
         )
-        binding.startOverButton.setOnClickListener {
-            cardViewModel.clearData()
-            view.findNavController()
-                .navigate(FinalCardFragmentDirections.actionFinalCardFragmentToMenuFragment())
-        }
-        binding.exitButton.setOnClickListener { exitProcess(0) }
+    }
+
+    fun goToMenuScreen() {
+        cardViewModel.clearData()
+        findNavController()
+            .navigate(R.id.action_finalCardFragment_to_menuFragment)
+    }
+
+    fun exitApp() {
+        exitProcess(0)
     }
 }

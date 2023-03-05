@@ -40,7 +40,10 @@ class WishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.nextButton.setOnClickListener { goToNextScreen() }
+        binding.apply {
+            lifecycleOwner = lifecycleOwner
+            wishFragment = this@WishFragment
+        }
     }
 
     override fun onDestroyView() {
@@ -63,7 +66,7 @@ class WishFragment : Fragment() {
         return cardViewModel.filterWishesData(WishDatasource())
     }
 
-    private fun goToNextScreen() {
+    fun goToNextScreen() {
         if (cardViewModel.selectedWishId != -1) {
             cardViewModel.getWishFromPosition()
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)

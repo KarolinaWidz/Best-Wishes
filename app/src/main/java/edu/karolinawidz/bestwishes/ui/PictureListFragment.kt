@@ -18,7 +18,6 @@ import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
-
 class PictureListFragment : Fragment() {
     companion object {
         private const val TOAST_OFFSET_X = 0
@@ -41,8 +40,9 @@ class PictureListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.nextButton.setOnClickListener {
-            goToNextScreen()
+        binding.apply {
+            lifecycleOwner = lifecycleOwner
+            pictureListFragment = this@PictureListFragment
         }
     }
 
@@ -65,7 +65,7 @@ class PictureListFragment : Fragment() {
         return cardViewModel.filterPictureData(PictureDatasource())
     }
 
-    private fun goToNextScreen() {
+    fun goToNextScreen() {
         if (cardViewModel.selectedPictureId != -1) {
             cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)

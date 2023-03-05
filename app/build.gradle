@@ -3,14 +3,13 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
 }
-
+apply plugin: 'kotlin-kapt'
 android {
     namespace 'edu.karolinawidz.bestwishes'
     compileSdk 33
 
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
+        dataBinding true
     }
 
 
