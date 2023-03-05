@@ -45,7 +45,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_finalCardFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/menuFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="cardType"
             app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
