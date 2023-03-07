@@ -17,7 +17,7 @@ class CardViewModel : ViewModel() {
     private var _selectedWishId = -1
     val selectedWishId get() = _selectedWishId
 
-    private lateinit var _cardType: CardType
+    private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
 
     private lateinit var _pictureData: List<Picture>

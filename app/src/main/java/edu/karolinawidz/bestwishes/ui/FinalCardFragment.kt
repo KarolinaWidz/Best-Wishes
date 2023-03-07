@@ -1,9 +1,13 @@
 package edu.karolinawidz.bestwishes.ui
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +16,7 @@ import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
 import edu.karolinawidz.bestwishes.util.PictureGenerator
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 import kotlin.system.exitProcess
+
 
 class FinalCardFragment : Fragment() {
 
@@ -35,10 +40,11 @@ class FinalCardFragment : Fragment() {
         }
         binding.imageFinalPicture.setImageBitmap(
             PictureGenerator.createCard(
-                requireContext(),
-                cardViewModel.pictureResourceId,
-                cardViewModel.wishResourceId,
-                cardViewModel.cardType.heading
+                createBitmapFromResources(),
+                resources.getText(cardViewModel.wishResourceId),
+                cardViewModel.cardType.heading,
+                ResourcesCompat.getFont(requireContext(), R.font.card_firstschool),
+                ContextCompat.getColor(requireContext(), R.color.final_font_color)
             )
         )
     }
@@ -51,5 +57,12 @@ class FinalCardFragment : Fragment() {
 
     fun exitApp() {
         exitProcess(0)
+    }
+
+    private fun createBitmapFromResources(): Bitmap {
+        return BitmapFactory.decodeResource(
+            requireContext().resources,
+            cardViewModel.pictureResourceId
+        ) ?: Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888)
     }
 }
