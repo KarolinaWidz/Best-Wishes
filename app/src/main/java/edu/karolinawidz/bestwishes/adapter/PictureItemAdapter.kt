@@ -37,7 +37,6 @@ class PictureItemAdapter(
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
         holder.radioButton.isChecked = position == viewModel.selectedPictureId
-        println(viewModel.selectedPictureId)
         holder.radioButton.setOnClickListener {
             val lastCheckedItemPosition = viewModel.selectedPictureId
             viewModel.setSelectedPictureId(position)

@@ -1,5 +1,6 @@
 package edu.karolinawidz.bestwishes.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -58,7 +59,9 @@ class PictureListFragment : Fragment() {
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
             PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        val spanCount =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
     }
 
     private fun loadPictureData(): List<Picture> {
