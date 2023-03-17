@@ -17,12 +17,20 @@
         android:layout_marginTop="10dp"
         tools:context=".ui.FinalCardFragment">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/start_over_button"
-            app:layout_constraintEnd_toEndOf="@id/start_over_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -39,32 +47,35 @@
 
         <Button
             android:id="@+id/start_over_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="5dp"
             android:onClick="@{()->finalCardFragment.goToMenuScreen()}"
             android:text="@string/start_over"
             app:cornerRadius="15dp"
-            app:layout_constraintBottom_toTopOf="@id/exit_button"
+            app:layout_constraintBottom_toTopOf="@+id/exit_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
             android:id="@+id/exit_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="5dp"
             android:onClick="@{()->finalCardFragment.exitApp()}"
             android:text="@string/exit"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/start_over_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
