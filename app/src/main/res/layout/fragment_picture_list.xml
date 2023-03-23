@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
+            android:onClick="@{()->pictureListFragment.showReadImagePermission()}"
             android:contentDescription="@string/upload"
             android:src="@drawable/ic_upload_icon"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent" />
 

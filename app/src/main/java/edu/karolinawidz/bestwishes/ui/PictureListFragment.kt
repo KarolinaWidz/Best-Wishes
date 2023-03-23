@@ -17,6 +17,7 @@ import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.model.Picture
+import edu.karolinawidz.bestwishes.util.PermissionRequest
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 class PictureListFragment : Fragment() {
@@ -81,5 +82,9 @@ class PictureListFragment : Fragment() {
         val toast = Toast.makeText(requireContext(), "No picture selected", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.BOTTOM, TOAST_OFFSET_X, TOAST_OFFSET_Y)
         toast.show()
+    }
+
+    fun showReadImagePermission() {
+        PermissionRequest.requestReadImagePermission(requireContext(), requireActivity())
     }
 }
