@@ -35,7 +35,7 @@ class PictureItemAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
-        holder.imageView.setImageResource(item.imageResourceId)
+        holder.imageView.setImageURI(item.imageUri)
         holder.radioButton.isChecked = position == viewModel.selectedPictureId
         holder.radioButton.setOnClickListener {
             val lastCheckedItemPosition = viewModel.selectedPictureId

@@ -22,6 +22,7 @@ object PictureGenerator {
         font: Typeface?,
         fontColor: Int
     ): Bitmap? {
+
         val temporaryBitmap = Bitmap.createBitmap(PICTURE_WIDTH, PICTURE_HEIGHT, picture.config)
         val canvas = Canvas(temporaryBitmap)
         canvas.drawColor(Color.WHITE)

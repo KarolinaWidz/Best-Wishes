@@ -65,7 +65,7 @@ class PictureListFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
     }
 
-    private fun loadPictureData(): List<Picture> {
+    private fun loadPictureData(): MutableList<Picture> {
         return cardViewModel.filterPictureData(PictureDatasource())
     }
 
@@ -84,7 +84,11 @@ class PictureListFragment : Fragment() {
         toast.show()
     }
 
-    fun showReadImagePermission() {
+    fun loadUserPhoto() {
+
+    }
+
+    private fun showReadImagePermission() {
         PermissionRequest.requestReadImagePermission(requireContext(), requireActivity())
     }
 }

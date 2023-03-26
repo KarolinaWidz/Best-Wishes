@@ -1,5 +1,6 @@
 package edu.karolinawidz.bestwishes.viewModel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import edu.karolinawidz.bestwishes.data.PictureDatasource
@@ -20,14 +21,14 @@ class CardViewModel : ViewModel() {
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
 
-    private lateinit var _pictureData: List<Picture>
+    private lateinit var _pictureData: MutableList<Picture>
     val pictureData get() = _pictureData
 
     private lateinit var _wishData: List<Wish>
     val wishData get() = _wishData
 
-    private var _pictureResourceId = -1
-    val pictureResourceId get() = _pictureResourceId
+    private var _pictureUri: Uri? = null
+    val pictureUri get() = _pictureUri!!
 
     private var _wishResourceId = -1
     val wishResourceId get() = _wishResourceId
@@ -40,8 +41,8 @@ class CardViewModel : ViewModel() {
         _selectedWishId = id
     }
 
-    fun setPictureResourceId(id: Int) {
-        _pictureResourceId = id
+    fun setPictureUri(uri: Uri) {
+        _pictureUri = uri
     }
 
     fun setWishResourceId(id: Int) {
@@ -52,15 +53,16 @@ class CardViewModel : ViewModel() {
         _cardType = cardType
     }
 
-    fun filterPictureData(pictureDatasource: PictureDatasource): List<Picture> {
-        return pictureDatasource.loadPictures().filter { it.type == cardType }
+    fun filterPictureData(pictureDatasource: PictureDatasource): MutableList<Picture> {
+        return pictureDatasource.loadPictures()
+            .filter { it.type == cardType } as MutableList<Picture>
     }
 
     fun filterWishesData(wishDatasource: WishDatasource): List<Wish> {
         return wishDatasource.loadWishes().filter { it.type == cardType }
     }
 
-    fun setPictureData(pictureList: List<Picture>) {
+    fun setPictureData(pictureList: MutableList<Picture>) {
         _pictureData = pictureList
     }
 
@@ -72,7 +74,7 @@ class CardViewModel : ViewModel() {
     fun getImageFromPosition() {
         try {
             Log.i(TAG, "Picture selected")
-            setPictureResourceId(pictureData[selectedPictureId].imageResourceId)
+            setPictureUri(pictureData[selectedPictureId].imageUri)
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
         }
@@ -90,7 +92,7 @@ class CardViewModel : ViewModel() {
     fun clearData() {
         _selectedPictureId = -1
         _selectedWishId = -1
-        _pictureResourceId = -1
+        _pictureUri = null
         _wishResourceId = -1
     }
 }
