@@ -2,6 +2,7 @@ package edu.karolinawidz.bestwishes.viewModel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
@@ -21,7 +22,7 @@ class CardViewModel : ViewModel() {
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
 
-    private lateinit var _pictureData: MutableList<Picture>
+    private var _pictureData = MutableLiveData<List<Picture>>()
     val pictureData get() = _pictureData
 
     private lateinit var _wishData: List<Wish>
@@ -55,20 +56,27 @@ class CardViewModel : ViewModel() {
 
     fun addNewImage(uri: Uri, stringResourceId: Int) {
         val newPicture = Picture(stringResourceId, uri, _cardType)
-        _pictureData.add(newPicture)
+        val currentList = _pictureData.value?.toMutableList()
+        if (currentList == null) {
+            _pictureData.value = (listOf(newPicture))
+        } else {
+            currentList.add(newPicture)
+            _pictureData.value = (currentList)
+        }
+
     }
 
-    fun filterPictureData(pictureDatasource: PictureDatasource): MutableList<Picture> {
-        return pictureDatasource.loadPictures()
-            .filter { it.type == _cardType } as MutableList<Picture>
+    fun filterPictureData(pictureDatasource: PictureDatasource): List<Picture> {
+        return pictureDatasource.loadPictures().value
+            ?.filter { it.type == _cardType } as List<Picture>
     }
 
     fun filterWishesData(wishDatasource: WishDatasource): List<Wish> {
         return wishDatasource.loadWishes().filter { it.type == _cardType }
     }
 
-    fun setPictureData(pictureList: MutableList<Picture>) {
-        _pictureData = pictureList
+    fun setPictureData(pictureList: List<Picture>) {
+        _pictureData.value = pictureList
     }
 
 
@@ -79,7 +87,7 @@ class CardViewModel : ViewModel() {
     fun getImageFromPosition() {
         try {
             Log.i(TAG, "Picture selected")
-            setPictureUri(_pictureData[_selectedPictureId].imageUri)
+            _pictureData.value?.get(_selectedPictureId)?.let { setPictureUri(it.imageUri) }
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
         }

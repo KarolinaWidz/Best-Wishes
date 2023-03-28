@@ -56,6 +56,12 @@ class PictureListFragment : Fragment() {
             lifecycleOwner = lifecycleOwner
             pictureListFragment = this@PictureListFragment
         }
+        cardViewModel.pictureData.observe(viewLifecycleOwner) {
+            it?.let {
+                val adapter = binding.recyclerView.adapter as PictureItemAdapter
+                adapter.notifyItemInserted(it.size - 1)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -69,13 +75,13 @@ class PictureListFragment : Fragment() {
         cardViewModel.setPictureData(loadPictureData())
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
-            PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData)
+            PictureItemAdapter(cardViewModel, requireContext())
         val spanCount =
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
     }
 
-    private fun loadPictureData(): MutableList<Picture> {
+    private fun loadPictureData(): List<Picture> {
         return cardViewModel.filterPictureData(PictureDatasource())
     }
 

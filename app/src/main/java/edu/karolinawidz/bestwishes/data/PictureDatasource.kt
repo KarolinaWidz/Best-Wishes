@@ -1,6 +1,7 @@
 package edu.karolinawidz.bestwishes.data
 
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.model.Picture
@@ -8,8 +9,8 @@ import edu.karolinawidz.bestwishes.model.Picture
 const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
 
 class PictureDatasource {
-    fun loadPictures(): MutableList<Picture> {
-        return mutableListOf(
+    fun loadPictures(): MutableLiveData<List<Picture>> {
+        val pictureList = mutableListOf(
             Picture(
                 R.string.birthday_picture1,
                 Uri.parse("$RESOURCE_PATH/birthday1"),
@@ -101,6 +102,7 @@ class PictureDatasource {
                 CardType.ANNIVERSARY
             )
         )
+        return MutableLiveData(pictureList)
     }
 
 }
