@@ -9,11 +9,13 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
+import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 class PictureItemAdapter(
     private val viewModel: CardViewModel,
     private val context: Context,
+    private var data: List<Picture>
 ) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
 
@@ -31,7 +33,7 @@ class PictureItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = viewModel.pictureData.value!![position]
+        val item = data[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageURI(item.imageUri)
         holder.radioButton.isChecked = position == viewModel.selectedPictureId
@@ -43,6 +45,10 @@ class PictureItemAdapter(
         }
     }
 
-    override fun getItemCount() = viewModel.pictureData.value!!.size
+    override fun getItemCount() = data.size
 
+    fun updateListAfterInsert(list: List<Picture>) {
+        data = list
+        notifyItemInserted(list.size)
+    }
 }
