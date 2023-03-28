@@ -1,7 +1,7 @@
 package edu.karolinawidz.bestwishes.ui
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +25,7 @@ class FinalCardFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFinalCardBinding.inflate(inflater, container, false)
         return binding.root
@@ -51,8 +50,7 @@ class FinalCardFragment : Fragment() {
 
     fun goToMenuScreen() {
         cardViewModel.clearData()
-        findNavController()
-            .navigate(R.id.action_finalCardFragment_to_menuFragment)
+        findNavController().navigate(R.id.action_finalCardFragment_to_menuFragment)
     }
 
     fun exitApp() {
@@ -60,9 +58,9 @@ class FinalCardFragment : Fragment() {
     }
 
     private fun createBitmapFromResources(): Bitmap {
-        return BitmapFactory.decodeResource(
-            requireContext().resources,
-            cardViewModel.pictureResourceId
-        ) ?: Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888)
+        val src =
+            ImageDecoder.createSource(requireContext().contentResolver, cardViewModel.pictureUri)
+        val resultImage = ImageDecoder.decodeBitmap(src)
+        return resultImage.copy(Bitmap.Config.ARGB_8888, true)
     }
 }

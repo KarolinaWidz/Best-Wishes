@@ -59,7 +59,7 @@ class WishFragment : Fragment() {
         recyclerView.adapter =
             WishItemAdapter(cardViewModel, requireContext(), cardViewModel.wishData)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.imagePreviewPicture.setImageResource(cardViewModel.pictureResourceId)
+        binding.imagePreviewPicture.setImageURI(cardViewModel.pictureUri)
     }
 
     private fun loadWishesData(): List<Wish> {

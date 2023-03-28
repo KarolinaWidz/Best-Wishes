@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,7 +31,15 @@ class PictureListFragment : Fragment() {
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentPictureListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var getContent: ActivityResultLauncher<String>
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            it?.let { cardViewModel.addNewImage(it, R.string.user_image) }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +56,12 @@ class PictureListFragment : Fragment() {
             lifecycleOwner = lifecycleOwner
             pictureListFragment = this@PictureListFragment
         }
+        cardViewModel.pictureData.observe(viewLifecycleOwner) {
+            it?.let {
+                val adapter = binding.recyclerView.adapter as PictureItemAdapter
+                adapter.updateListAfterInsert(it)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -59,7 +75,8 @@ class PictureListFragment : Fragment() {
         cardViewModel.setPictureData(loadPictureData())
         itemAnimator.supportsChangeAnimations = false
         recyclerView.adapter =
-            PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData)
+            PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData.value!!)
+        recyclerView.setHasFixedSize(true)
         val spanCount =
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
@@ -84,7 +101,11 @@ class PictureListFragment : Fragment() {
         toast.show()
     }
 
-    fun showReadImagePermission() {
+    fun loadUserPhoto() {
+        getContent.launch("image/*")
+    }
+
+    private fun showReadImagePermission() {
         PermissionRequest.requestReadImagePermission(requireContext(), requireActivity())
     }
 }
