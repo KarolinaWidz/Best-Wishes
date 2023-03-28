@@ -41,11 +41,11 @@ class CardViewModel : ViewModel() {
         _selectedWishId = id
     }
 
-    fun setPictureUri(uri: Uri) {
+    private fun setPictureUri(uri: Uri) {
         _pictureUri = uri
     }
 
-    fun setWishResourceId(id: Int) {
+    private fun setWishResourceId(id: Int) {
         _wishResourceId = id
     }
 
@@ -53,13 +53,18 @@ class CardViewModel : ViewModel() {
         _cardType = cardType
     }
 
+    fun addNewImage(uri: Uri, stringResourceId: Int) {
+        val newPicture = Picture(stringResourceId, uri, _cardType)
+        _pictureData.add(newPicture)
+    }
+
     fun filterPictureData(pictureDatasource: PictureDatasource): MutableList<Picture> {
         return pictureDatasource.loadPictures()
-            .filter { it.type == cardType } as MutableList<Picture>
+            .filter { it.type == _cardType } as MutableList<Picture>
     }
 
     fun filterWishesData(wishDatasource: WishDatasource): List<Wish> {
-        return wishDatasource.loadWishes().filter { it.type == cardType }
+        return wishDatasource.loadWishes().filter { it.type == _cardType }
     }
 
     fun setPictureData(pictureList: MutableList<Picture>) {
@@ -74,7 +79,7 @@ class CardViewModel : ViewModel() {
     fun getImageFromPosition() {
         try {
             Log.i(TAG, "Picture selected")
-            setPictureUri(pictureData[selectedPictureId].imageUri)
+            setPictureUri(_pictureData[_selectedPictureId].imageUri)
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No picture selected")
         }
@@ -83,7 +88,7 @@ class CardViewModel : ViewModel() {
     fun getWishFromPosition() {
         try {
             Log.i(TAG, "Wish selected")
-            setWishResourceId(wishData[selectedWishId].stringResourceId)
+            setWishResourceId(_wishData[_selectedWishId].stringResourceId)
         } catch (e: IndexOutOfBoundsException) {
             Log.e(TAG, "No wish selected")
         }

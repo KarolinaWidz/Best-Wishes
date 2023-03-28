@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -33,13 +32,6 @@ class MenuFragment : Fragment() {
         cardViewModel.clearData()
         binding.birthdayCardButton.setOnClickListener { navigateToNext(CardType.BIRTHDAY) }
         binding.anniversaryCardButton.setOnClickListener { navigateToNext(CardType.ANNIVERSARY) }
-        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            println(it)
-        }
-        binding.photoButton?.setOnClickListener {
-            getContent.launch("image/*")
-        }
-
     }
 
     override fun onDestroy() {

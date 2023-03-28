@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,7 +31,15 @@ class PictureListFragment : Fragment() {
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentPictureListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var getContent: ActivityResultLauncher<String>
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            it?.let { cardViewModel.addNewImage(it, R.string.user_image) }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,7 +95,7 @@ class PictureListFragment : Fragment() {
     }
 
     fun loadUserPhoto() {
-
+        getContent.launch("image/*")
     }
 
     private fun showReadImagePermission() {

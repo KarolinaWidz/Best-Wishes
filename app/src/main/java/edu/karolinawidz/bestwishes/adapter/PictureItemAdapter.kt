@@ -15,7 +15,7 @@ import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 class PictureItemAdapter(
     private val viewModel: CardViewModel,
     private val context: Context,
-    private val data: List<Picture>
+    private val data: MutableList<Picture>
 ) :
     RecyclerView.Adapter<PictureItemAdapter.ItemViewHolder>() {
 
