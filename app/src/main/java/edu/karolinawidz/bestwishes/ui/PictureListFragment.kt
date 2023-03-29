@@ -2,11 +2,9 @@ package edu.karolinawidz.bestwishes.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -20,13 +18,10 @@ import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.util.PermissionRequest
+import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 class PictureListFragment : Fragment() {
-    companion object {
-        private const val TOAST_OFFSET_X = 0
-        private const val TOAST_OFFSET_Y = 220
-    }
 
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentPictureListBinding? = null
@@ -91,14 +86,8 @@ class PictureListFragment : Fragment() {
             cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
-            showNoPictureSelectedToast()
+            ToastUtil.showNoPictureSelectedToast(requireContext(), R.string.no_picture_selected)
         }
-    }
-
-    private fun showNoPictureSelectedToast() {
-        val toast = Toast.makeText(requireContext(), "No picture selected", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.BOTTOM, TOAST_OFFSET_X, TOAST_OFFSET_Y)
-        toast.show()
     }
 
     fun loadUserPhoto() {

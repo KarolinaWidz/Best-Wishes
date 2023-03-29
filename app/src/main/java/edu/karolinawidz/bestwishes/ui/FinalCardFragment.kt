@@ -1,8 +1,13 @@
 package edu.karolinawidz.bestwishes.ui
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
 import edu.karolinawidz.bestwishes.util.PictureGenerator
+import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 import kotlin.system.exitProcess
 
@@ -37,15 +43,8 @@ class FinalCardFragment : Fragment() {
             lifecycleOwner = lifecycleOwner
             finalCardFragment = this@FinalCardFragment
         }
-        binding.imageFinalPicture.setImageBitmap(
-            PictureGenerator.createCard(
-                createBitmapFromResources(),
-                resources.getText(cardViewModel.wishResourceId),
-                cardViewModel.cardType.heading,
-                ResourcesCompat.getFont(requireContext(), R.font.card_firstschool),
-                ContextCompat.getColor(requireContext(), R.color.final_font_color)
-            )
-        )
+        val card = createCard()
+        binding.imageFinalPicture.setImageBitmap(card)
     }
 
     fun goToMenuScreen() {
@@ -58,9 +57,44 @@ class FinalCardFragment : Fragment() {
     }
 
     private fun createBitmapFromResources(): Bitmap {
-        val src =
-            ImageDecoder.createSource(requireContext().contentResolver, cardViewModel.pictureUri)
-        val resultImage = ImageDecoder.decodeBitmap(src)
+        @Suppress("DEPRECATION") val resultImage: Bitmap =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                val src = ImageDecoder.createSource(
+                    requireContext().contentResolver,
+                    cardViewModel.pictureUri
+                )
+                ImageDecoder.decodeBitmap(src)
+            } else {
+                MediaStore.Images.Media.getBitmap(
+                    requireContext().contentResolver,
+                    cardViewModel.pictureUri
+                )
+            }
         return resultImage.copy(Bitmap.Config.ARGB_8888, true)
+    }
+
+    private fun createCard(): Bitmap? {
+        return PictureGenerator.createCard(
+            createBitmapFromResources(),
+            resources.getText(cardViewModel.wishResourceId),
+            cardViewModel.cardType.heading,
+            ResourcesCompat.getFont(requireContext(), R.font.card_firstschool),
+            ContextCompat.getColor(requireContext(), R.color.final_font_color)
+        )
+    }
+
+    private fun shareCard(uri: Uri) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, uri)
+            type = "image/jpeg"
+        }
+        val title = resources.getString(R.string.share_title)
+        val chooser = Intent.createChooser(intent, title)
+        try {
+            startActivity(chooser)
+        } catch (e: ActivityNotFoundException) {
+            ToastUtil.showNoPictureSelectedToast(requireContext(), R.string.cannot_share)
+        }
     }
 }

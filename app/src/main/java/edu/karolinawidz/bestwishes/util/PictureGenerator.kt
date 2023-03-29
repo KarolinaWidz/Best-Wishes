@@ -12,7 +12,7 @@ object PictureGenerator {
     private const val HORIZONTAL_MARGIN = 40
     private const val HEADING_HEIGHT = 60F
     private const val PICTURE_HEIGHT = 1800
-    private const val PICTURE_WIDTH = 1000
+    private const val PICTURE_WIDTH = 1200
     private const val PICTURE_WIDTH_CENTER = PICTURE_WIDTH / 2F
 
     fun createCard(
