@@ -8,7 +8,7 @@ import edu.karolinawidz.bestwishes.model.Picture
 
 const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
 
-class PictureDatasource {
+object PictureDatasource {
     fun loadPictures(): MutableLiveData<List<Picture>> {
         val pictureList = mutableListOf(
             Picture(

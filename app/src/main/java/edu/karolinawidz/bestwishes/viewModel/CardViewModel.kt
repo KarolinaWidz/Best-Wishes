@@ -22,7 +22,11 @@ class CardViewModel : ViewModel() {
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
 
-    private var _pictureData = MutableLiveData<List<Picture>>()
+    private var _pictureData = MutableLiveData(
+        PictureDatasource.loadPictures().value
+            ?.filter { it.type == _cardType } as List<Picture>
+    )
+
     val pictureData get() = _pictureData
 
     private lateinit var _wishData: List<Wish>
@@ -56,29 +60,13 @@ class CardViewModel : ViewModel() {
 
     fun addNewImage(uri: Uri, stringResourceId: Int) {
         val newPicture = Picture(stringResourceId, uri, _cardType)
-        val currentList = _pictureData.value?.toMutableList()
-        if (currentList == null) {
-            _pictureData.value = (listOf(newPicture))
-        } else {
-            currentList.add(newPicture)
-            _pictureData.value = (currentList)
-        }
-
-    }
-
-    fun filterPictureData(pictureDatasource: PictureDatasource): List<Picture> {
-        return pictureDatasource.loadPictures().value
-            ?.filter { it.type == _cardType } as List<Picture>
+        val currentList = _pictureData.value.orEmpty()
+        _pictureData.value = currentList + newPicture
     }
 
     fun filterWishesData(wishDatasource: WishDatasource): List<Wish> {
         return wishDatasource.loadWishes().filter { it.type == _cardType }
     }
-
-    fun setPictureData(pictureList: List<Picture>) {
-        _pictureData.value = pictureList
-    }
-
 
     fun setWishData(wishList: List<Wish>) {
         _wishData = wishList
