@@ -48,13 +48,10 @@ class PictureListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
+        initUI()
         binding.apply {
             lifecycleOwner = lifecycleOwner
             pictureListFragment = this@PictureListFragment
-        }
-        cardViewModel.pictureData.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
         }
     }
 
@@ -63,20 +60,26 @@ class PictureListFragment : Fragment() {
         _binding = null
     }
 
-    private fun initData() {
+    private fun initUI() {
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
-        adapter = PictureItemAdapter(cardViewModel, requireContext())
+        adapter = PictureItemAdapter(requireContext(), recyclerView)
         recyclerView.adapter = adapter
+
         val spanCount =
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                PORTRAIT_COLUMNS else LANDSCAPE_COLUMNS
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) PORTRAIT_COLUMNS
+            else LANDSCAPE_COLUMNS
+
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+
+        cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
     }
 
+
     fun goToNextScreen() {
-        if (cardViewModel.selectedPictureId != -1) {
+        if (cardViewModel.selectedPictureId != null) {
             cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {

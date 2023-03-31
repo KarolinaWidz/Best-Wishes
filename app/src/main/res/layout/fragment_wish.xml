@@ -21,6 +21,7 @@
             android:id="@+id/preview_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:cardBackgroundColor="@color/md_theme_light_onPrimary"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toTopOf="@+id/wish_fragment_guideline_portrait"
             app:layout_constraintDimensionRatio="w,4:3"

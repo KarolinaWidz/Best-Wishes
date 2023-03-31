@@ -9,11 +9,12 @@ import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.model.Wish
+import java.util.*
 
 private const val TAG = "CardViewModel"
 
 class CardViewModel : ViewModel() {
-    private var _selectedPictureId = -1
+    private var _selectedPictureId: String? = null
     val selectedPictureId get() = _selectedPictureId
 
     private var _selectedWishId = -1
@@ -38,7 +39,7 @@ class CardViewModel : ViewModel() {
     private var _wishResourceId = -1
     val wishResourceId get() = _wishResourceId
 
-    fun setSelectedPictureId(id: Int) {
+    private fun setSelectedPictureId(id: String) {
         _selectedPictureId = id
     }
 
@@ -58,8 +59,21 @@ class CardViewModel : ViewModel() {
         _cardType = cardType
     }
 
+    fun setWishData(wishList: List<Wish>) {
+        _wishData = wishList
+    }
+
+    fun pictureItemClicked(picture: Picture) {
+        val currentList = _pictureData.value.orEmpty()
+        currentList.forEach { it.isSet = false }
+        currentList.find { it == picture }?.let { it.isSet = true }
+        setSelectedPictureId(picture.id)
+        _pictureData.value = currentList
+    }
+
     fun addNewImage(uri: Uri, stringResourceId: Int) {
-        val newPicture = Picture(stringResourceId, uri, _cardType)
+        val newPicture =
+            Picture(UUID.randomUUID().toString(), stringResourceId, uri, _cardType, false)
         val currentList = _pictureData.value.orEmpty()
         _pictureData.value = currentList + newPicture
     }
@@ -68,15 +82,12 @@ class CardViewModel : ViewModel() {
         return wishDatasource.loadWishes().filter { it.type == _cardType }
     }
 
-    fun setWishData(wishList: List<Wish>) {
-        _wishData = wishList
-    }
-
     fun getImageFromPosition() {
         try {
             Log.i(TAG, "Picture selected")
-            _pictureData.value?.get(_selectedPictureId)?.let { setPictureUri(it.imageUri) }
-        } catch (e: IndexOutOfBoundsException) {
+            _pictureData.value?.first { it.id == _selectedPictureId }
+                ?.let { setPictureUri(it.imageUri) }
+        } catch (e: NoSuchElementException) {
             Log.e(TAG, "No picture selected")
         }
     }
@@ -91,9 +102,12 @@ class CardViewModel : ViewModel() {
     }
 
     fun clearData() {
-        _selectedPictureId = -1
+        _selectedPictureId = null
         _selectedWishId = -1
         _pictureUri = null
         _wishResourceId = -1
+        _pictureData.value =
+            PictureDatasource.loadPictures().value
+                ?.filter { it.type == _cardType } as List<Picture>
     }
 }

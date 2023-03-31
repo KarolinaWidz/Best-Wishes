@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -13,24 +12,27 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
-import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 class PictureItemAdapter(
-    private val viewModel: CardViewModel,
     private val context: Context,
-) : ListAdapter<Picture, PictureItemAdapter.ItemViewHolder>(PictureAdapterDiff) {
+    private val recyclerView: RecyclerView
+) : ListAdapter<Picture, PictureItemAdapter.ItemViewHolder>(PictureAdapterDiff),
+    View.OnClickListener {
+
+    lateinit var itemClickListener: (picture: Picture) -> Unit
+    private var previousSelected = -1
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val radioButton: RadioButton = view.findViewById(R.id.picture_radio_button)
         val textView: TextView = view.findViewById(R.id.picture_text)
         val imageView: ImageView = view.findViewById(R.id.picture_image)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
+        val item = LayoutInflater.from(parent.context)
             .inflate(R.layout.picture_list_item, parent, false)
-        return ItemViewHolder(adapterLayout)
+        item.setOnClickListener(this)
+        return ItemViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -38,24 +40,25 @@ class PictureItemAdapter(
         holder.run {
             textView.text = context.resources.getString(item.stringResourceId)
             imageView.setImageURI(item.imageUri)
-            radioButton.isChecked = position == viewModel.selectedPictureId
-            radioButton.setOnClickListener {
-                val lastCheckedItemPosition = viewModel.selectedPictureId
-                viewModel.setSelectedPictureId(position)
-                notifyItemChanged(position)
-                notifyItemChanged(lastCheckedItemPosition)
-            }
+            radioButton.isChecked = item.isSet
         }
+    }
+
+    override fun onClick(v: View) {
+        val position = recyclerView.getChildAdapterPosition(v)
+        notifyItemChanged(position)
+        notifyItemChanged(previousSelected)
+        itemClickListener(getItem(position))
+        previousSelected = position
     }
 }
 
 object PictureAdapterDiff : DiffUtil.ItemCallback<Picture>() {
     override fun areItemsTheSame(oldItem: Picture, newItem: Picture): Boolean {
-        return oldItem.imageUri == newItem.imageUri
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Picture, newItem: Picture): Boolean {
         return oldItem == newItem
     }
-
 }
