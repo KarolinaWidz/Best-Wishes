@@ -30,53 +30,23 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="10dp"
             app:cardBackgroundColor="@color/md_theme_light_onPrimary"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toTopOf="@+id/next_button"
+            app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintEnd_toStartOf="@+id/wish_fragment_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/image_preview_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/image_preview_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:padding="8dp"
-                    android:text="@string/image_preview"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="@id/preview_card"
-                    app:layout_constraintTop_toTopOf="@id/preview_card" />
-
-                <ImageView
-                    android:id="@+id/image_preview_picture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/selected_picture"
-                    android:importantForAccessibility="yes"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/birthday1"
-                    tools:ignore="RedundantDescriptionCheck,RedundantDescriptionCheck" />
-            </LinearLayout>
+                android:contentDescription="@string/selected_picture"
+                android:importantForAccessibility="yes"
+                android:scaleType="fitXY"
+                android:src="@drawable/birthday1" />
 
         </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/select_wishes_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="8dp"
-            android:text="@string/select_wish"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/wish_fragment_guideline"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -86,24 +56,20 @@
             android:paddingBottom="5dp"
             android:scrollbars="vertical"
             app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/next_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.442"
             app:layout_constraintStart_toStartOf="@+id/wish_fragment_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/select_wishes_text"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
             android:onClick="@{()->wishFragment.goToNextScreen()}"
             android:text="@string/next"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/wish_fragment_guideline"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
