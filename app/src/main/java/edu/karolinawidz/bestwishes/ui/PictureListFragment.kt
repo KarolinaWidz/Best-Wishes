@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
-import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
-import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.util.PermissionRequest
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
+
+const val PORTRAIT_COLUMNS = 2
+const val LANDSCAPE_COLUMNS = 3
 
 class PictureListFragment : Fragment() {
 
@@ -27,6 +28,7 @@ class PictureListFragment : Fragment() {
     private var _binding: FragmentPictureListBinding? = null
     private val binding get() = _binding!!
     private lateinit var getContent: ActivityResultLauncher<String>
+    private lateinit var adapter: PictureItemAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,25 +39,19 @@ class PictureListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPictureListBinding.inflate(inflater, container, false)
-        initData()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUI()
         binding.apply {
             lifecycleOwner = lifecycleOwner
             pictureListFragment = this@PictureListFragment
-        }
-        cardViewModel.pictureData.observe(viewLifecycleOwner) {
-            it?.let {
-                val adapter = binding.recyclerView.adapter as PictureItemAdapter
-                adapter.updateListAfterInsert(it)
-            }
         }
     }
 
@@ -64,25 +60,27 @@ class PictureListFragment : Fragment() {
         _binding = null
     }
 
-    private fun initData() {
+    private fun initUI() {
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
-        cardViewModel.setPictureData(loadPictureData())
         itemAnimator.supportsChangeAnimations = false
-        recyclerView.adapter =
-            PictureItemAdapter(cardViewModel, requireContext(), cardViewModel.pictureData.value!!)
-        recyclerView.setHasFixedSize(true)
+        adapter = PictureItemAdapter(requireContext(), recyclerView)
+        recyclerView.adapter = adapter
+
         val spanCount =
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) PORTRAIT_COLUMNS
+            else LANDSCAPE_COLUMNS
+
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+
+        cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
+        adapter.previousSelected = { cardViewModel.findPreviousItemClickedPos() }
     }
 
-    private fun loadPictureData(): List<Picture> {
-        return cardViewModel.filterPictureData(PictureDatasource())
-    }
 
     fun goToNextScreen() {
-        if (cardViewModel.selectedPictureId != -1) {
+        if (cardViewModel.selectedPictureId != null) {
             cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
@@ -97,4 +95,5 @@ class PictureListFragment : Fragment() {
     private fun showReadImagePermission() {
         PermissionRequest.requestReadImagePermission(requireContext(), requireActivity())
     }
+
 }
