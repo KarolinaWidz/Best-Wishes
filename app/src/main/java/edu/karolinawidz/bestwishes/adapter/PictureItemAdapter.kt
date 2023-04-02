@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Picture
 
@@ -39,7 +40,7 @@ class PictureItemAdapter(
         val item = getItem(position)
         holder.run {
             textView.text = context.resources.getString(item.stringResourceId)
-            imageView.setImageURI(item.imageUri)
+            Glide.with(context).load(item.imageUri).into(imageView)
             radioButton.isChecked = item.isSet
         }
     }
