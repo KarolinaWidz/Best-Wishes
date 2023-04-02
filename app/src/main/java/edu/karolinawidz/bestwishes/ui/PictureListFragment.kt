@@ -75,6 +75,7 @@ class PictureListFragment : Fragment() {
 
         cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
         adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
+        adapter.previousSelected = { cardViewModel.findPreviousItemClickedPos() }
     }
 
 

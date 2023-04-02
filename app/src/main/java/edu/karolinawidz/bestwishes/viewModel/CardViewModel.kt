@@ -71,6 +71,10 @@ class CardViewModel : ViewModel() {
         _pictureData.value = currentList
     }
 
+    fun findPreviousItemClickedPos(): Int {
+        return _pictureData.value!!.indexOfFirst { it.isSet }
+    }
+
     fun addNewImage(uri: Uri, stringResourceId: Int) {
         val newPicture =
             Picture(UUID.randomUUID().toString(), stringResourceId, uri, _cardType, false)

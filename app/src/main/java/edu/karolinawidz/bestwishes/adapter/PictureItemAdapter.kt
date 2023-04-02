@@ -20,7 +20,7 @@ class PictureItemAdapter(
     View.OnClickListener {
 
     lateinit var itemClickListener: (picture: Picture) -> Unit
-    private var previousSelected = -1
+    lateinit var previousSelected: () -> Int
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val radioButton: RadioButton = view.findViewById(R.id.picture_radio_button)
@@ -47,9 +47,8 @@ class PictureItemAdapter(
     override fun onClick(v: View) {
         val position = recyclerView.getChildAdapterPosition(v)
         notifyItemChanged(position)
-        notifyItemChanged(previousSelected)
+        notifyItemChanged(previousSelected())
         itemClickListener(getItem(position))
-        previousSelected = position
     }
 }
 
