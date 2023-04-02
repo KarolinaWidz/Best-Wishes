@@ -6,41 +6,56 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.model.Wish
-import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
 class WishItemAdapter(
-    private val viewModel: CardViewModel,
     private val context: Context,
-    private val data: List<Wish>
+    private val recyclerView: RecyclerView
 ) :
-    RecyclerView.Adapter<WishItemAdapter.ItemViewHolder>() {
+    ListAdapter<Wish, WishItemAdapter.ItemViewHolder>(WishAdapterDiff), View.OnClickListener {
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    lateinit var itemClickListener: (wish: Wish) -> Unit
+    lateinit var previousSelected: () -> Int
+
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val radioButton: RadioButton = itemView.findViewById(R.id.wish_radio_button)
         val textView: TextView = itemView.findViewById(R.id.wish_text)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
+        val item = LayoutInflater.from(parent.context)
             .inflate(R.layout.wish_list_item, parent, false)
-        return ItemViewHolder(adapterLayout)
+        item.setOnClickListener(this)
+        return ItemViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = data[position]
-        holder.textView.text = context.resources.getString(item.stringResourceId)
-        holder.radioButton.isChecked = viewModel.selectedWishId == position
-        holder.radioButton.setOnClickListener {
-            val previousPosition = viewModel.selectedWishId
-            viewModel.setSelectedWishId(position)
-            notifyItemChanged(previousPosition)
-            notifyItemChanged(position)
+        val item = getItem(position)
+        holder.run {
+            textView.text = context.resources.getString(item.stringResourceId)
+            radioButton.isChecked = item.isSet
         }
     }
 
-    override fun getItemCount() = data.size
+    override fun onClick(v: View) {
+        val position = recyclerView.getChildAdapterPosition(v)
+        notifyItemChanged(position)
+        notifyItemChanged(previousSelected())
+        itemClickListener(getItem(position))
+    }
+}
+
+object WishAdapterDiff : DiffUtil.ItemCallback<Wish>() {
+    override fun areItemsTheSame(oldItem: Wish, newItem: Wish): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Wish, newItem: Wish): Boolean {
+        return oldItem == newItem
+    }
 
 }

@@ -14,7 +14,8 @@
         <RadioButton
             android:id="@+id/wish_radio_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:clickable="false" />
 
         <TextView
             android:id="@+id/wish_text"
