@@ -10,10 +10,11 @@ object PictureGenerator {
     private const val FONT_SIZE = 50F
     private const val MARGIN = 20
     private const val HORIZONTAL_MARGIN = 40
+    private const val PORTRAIT_HORIZONTAL_MARGIN = 262
     private const val HEADING_HEIGHT = 60F
-    private const val PICTURE_HEIGHT = 1800
-    private const val PICTURE_WIDTH = 1200
-    private const val PICTURE_WIDTH_CENTER = PICTURE_WIDTH / 2F
+    private const val CARD_HEIGHT = 1800
+    private const val CARD_WIDTH = 1200
+    private const val CARD_WIDTH_CENTER = CARD_WIDTH / 2F
 
     fun createCard(
         picture: Bitmap,
@@ -23,7 +24,7 @@ object PictureGenerator {
         fontColor: Int
     ): Bitmap? {
 
-        val temporaryBitmap = Bitmap.createBitmap(PICTURE_WIDTH, PICTURE_HEIGHT, picture.config)
+        val temporaryBitmap = Bitmap.createBitmap(CARD_WIDTH, CARD_HEIGHT, picture.config)
         val canvas = Canvas(temporaryBitmap)
         canvas.drawColor(Color.WHITE)
 
@@ -36,7 +37,7 @@ object PictureGenerator {
 
         canvas.drawText(
             heading,
-            PICTURE_WIDTH_CENTER,
+            CARD_WIDTH_CENTER,
             HEADING_HEIGHT,
             textPaint
         )
@@ -46,7 +47,7 @@ object PictureGenerator {
 
         return Bitmap.createBitmap(
             temporaryBitmap, 0, 0,
-            PICTURE_WIDTH,
+            CARD_WIDTH,
             finalSize,
             null, false
         )
@@ -57,16 +58,20 @@ object PictureGenerator {
         picture: Bitmap,
         textPaint: TextPaint
     ) {
-        val pictureHeight =
+        val pictureStart =
             (HEADING_HEIGHT + textPaint.fontMetrics.bottom + MARGIN).roundToInt()
+        val pictureEnd = canvas.width * 3 / 4
+        val margin =
+            if (picture.width > picture.height) HORIZONTAL_MARGIN else PORTRAIT_HORIZONTAL_MARGIN
+
         canvas.drawBitmap(
             picture,
             null,
             Rect(
-                HORIZONTAL_MARGIN,
-                pictureHeight,
-                canvas.width - HORIZONTAL_MARGIN,
-                canvas.width * 3 / 4
+                margin,
+                pictureStart,
+                canvas.width - margin,
+                pictureEnd
             ),
             Paint()
         )
