@@ -3,62 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/menuFragment">
+    app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/pictureListFragment"
-        android:name="edu.karolinawidz.bestwishes.ui.PictureListFragment"
-        android:label="@string/select_picture"
-        tools:layout="@layout/fragment_picture_list">
-        <action
-            android:id="@+id/action_pictureListFragment_to_wishFragment"
-            app:destination="@id/wishFragment" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
-    </fragment>
-    <fragment
-        android:id="@+id/wishFragment"
-        android:name="edu.karolinawidz.bestwishes.ui.WishFragment"
-        android:label="@string/adjust_wishes"
-        tools:layout="@layout/fragment_wish">
-        <argument
-            android:name="pictureId"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_wishFragment_to_finalCardFragment"
-            app:destination="@id/finalCardFragment" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
-    </fragment>
-    <fragment
-        android:id="@+id/finalCardFragment"
-        android:name="edu.karolinawidz.bestwishes.ui.FinalCardFragment"
-        android:label="@string/final_results"
-        tools:layout="@layout/fragment_final_card">
-        <argument
-            android:name="pictureId"
-            app:argType="integer" />
-        <argument
-            android:name="wishId"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_finalCardFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:popUpTo="@id/menuFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
-    </fragment>
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="edu.karolinawidz.bestwishes.ui.MenuFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_menu">
-        <action
-            android:id="@+id/action_menuFragment_to_pictureListFragment"
-            app:destination="@id/pictureListFragment" />
-    </fragment>
+    <navigation
+        android:id="@+id/home"
+        app:startDestination="@id/menuFragment">
+        <fragment
+            android:id="@+id/finalCardFragment"
+            android:name="edu.karolinawidz.bestwishes.ui.FinalCardFragment"
+            android:label="@string/final_results"
+            tools:layout="@layout/fragment_final_card">
+            <argument
+                android:name="pictureId"
+                app:argType="integer" />
+            <argument
+                android:name="wishId"
+                app:argType="integer" />
+            <action
+                android:id="@+id/action_finalCardFragment_to_menuFragment"
+                app:destination="@id/menuFragment"
+                app:popUpTo="@id/menuFragment"
+                app:popUpToInclusive="true" />
+            <argument
+                android:name="cardType"
+                app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
+        </fragment>
+        <fragment
+            android:id="@+id/wishFragment"
+            android:name="edu.karolinawidz.bestwishes.ui.WishFragment"
+            android:label="@string/adjust_wishes"
+            tools:layout="@layout/fragment_wish">
+            <argument
+                android:name="pictureId"
+                app:argType="integer" />
+            <action
+                android:id="@+id/action_wishFragment_to_finalCardFragment"
+                app:destination="@id/finalCardFragment" />
+            <argument
+                android:name="cardType"
+                app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
+        </fragment>
+        <fragment
+            android:id="@+id/pictureListFragment"
+            android:name="edu.karolinawidz.bestwishes.ui.PictureListFragment"
+            android:label="@string/select_picture"
+            tools:layout="@layout/fragment_picture_list">
+            <action
+                android:id="@+id/action_pictureListFragment_to_wishFragment"
+                app:destination="@id/wishFragment" />
+            <argument
+                android:name="cardType"
+                app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
+        </fragment>
+        <fragment
+            android:id="@+id/menuFragment"
+            android:name="edu.karolinawidz.bestwishes.ui.MenuFragment"
+            android:label="@string/app_name"
+            tools:layout="@layout/fragment_menu">
+            <action
+                android:id="@+id/action_menuFragment_to_pictureListFragment"
+                app:destination="@id/pictureListFragment" />
+        </fragment>
+    </navigation>
 </navigation>

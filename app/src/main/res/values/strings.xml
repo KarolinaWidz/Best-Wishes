@@ -63,5 +63,7 @@
     <string name="no_picture_selected">No picture selected</string>
     <string name="no_wish_selected">No wish selected</string>
     <string name="cannot_share">Cannot share card</string>
+    <string name="home">Home</string>
+    <string name="language">Language</string>
 
 </resources>
