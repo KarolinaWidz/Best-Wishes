@@ -1,6 +1,7 @@
 package edu.karolinawidz.bestwishes.ui
 
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,9 +34,8 @@ class PictureListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            it?.let { cardViewModel.addNewImage(it, R.string.user_image) }
-        }
+        getContent =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { addImageToList(it) }
     }
 
     override fun onCreateView(
@@ -90,6 +90,16 @@ class PictureListFragment : Fragment() {
 
     fun loadUserPhoto() {
         getContent.launch("image/*")
+    }
+
+    private fun addImageToList(uri: Uri?) {
+        uri?.let {
+            cardViewModel.addNewImage(it, R.string.user_image)
+            binding.recyclerView.postDelayed(
+                { binding.recyclerView.smoothScrollToPosition(0) },
+                1
+            )
+        }
     }
 
     private fun showReadImagePermission() {

@@ -76,7 +76,7 @@ class CardViewModel : ViewModel() {
         val newPicture =
             Picture(UUID.randomUUID().toString(), stringResourceId, uri, _cardType, false)
         val currentList = _pictureData.value.orEmpty()
-        _pictureData.value = currentList + newPicture
+        _pictureData.value = listOf(newPicture) + currentList
     }
 
     fun getImageFromPosition() {

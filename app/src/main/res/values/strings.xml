@@ -65,5 +65,8 @@
     <string name="cannot_share">Cannot share card</string>
     <string name="home">Home</string>
     <string name="language">Language</string>
+    <string name="share">Share</string>
+    <string name="my_pictures">My pictures</string>
+    <string name="explore">Explore</string>
 
 </resources>

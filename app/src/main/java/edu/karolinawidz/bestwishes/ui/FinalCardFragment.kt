@@ -39,12 +39,12 @@ class FinalCardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val card = createCard()
         binding.apply {
             lifecycleOwner = lifecycleOwner
             finalCardFragment = this@FinalCardFragment
+            imageFinalPicture.setImageBitmap(card)
         }
-        val card = createCard()
-        binding.imageFinalPicture.setImageBitmap(card)
     }
 
     fun goToMenuScreen() {
