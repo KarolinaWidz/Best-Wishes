@@ -55,7 +55,9 @@
             app:layout_constraintHeight_min="150dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/wish_fragment_guideline_portrait" />
+            app:layout_constraintTop_toBottomOf="@id/wish_fragment_guideline_portrait"
+            tools:itemCount="16"
+            tools:listitem="@layout/wish_list_item" />
 
         <Button
             android:id="@+id/next_button"

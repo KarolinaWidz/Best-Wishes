@@ -59,7 +59,9 @@
             app:layout_constraintBottom_toTopOf="@+id/next_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/wish_fragment_guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="16"
+            tools:listitem="@layout/wish_list_item" />
 
         <Button
             android:id="@+id/next_button"

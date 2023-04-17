@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.adapter
+package edu.karolinawidz.bestwishes.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

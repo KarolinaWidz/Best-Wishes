@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import edu.karolinawidz.bestwishes.R
-import edu.karolinawidz.bestwishes.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
+import edu.karolinawidz.bestwishes.ui.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.util.PermissionRequest
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
@@ -52,7 +52,9 @@ class PictureListFragment : Fragment() {
         binding.apply {
             lifecycleOwner = lifecycleOwner
             pictureListFragment = this@PictureListFragment
+            viewModel = cardViewModel
         }
+
     }
 
     override fun onDestroyView() {

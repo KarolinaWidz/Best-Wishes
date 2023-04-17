@@ -2,13 +2,17 @@ package edu.karolinawidz.bestwishes.viewModel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.model.Picture
 import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.services.PictureApi
+import kotlinx.coroutines.launch
 import java.util.*
 
 private const val TAG = "CardViewModel"
@@ -39,6 +43,13 @@ class CardViewModel : ViewModel() {
 
     private var _wishResourceId = -1
     val wishResourceId get() = _wishResourceId
+
+    private val _resultList = MutableLiveData<String>()
+    val resultList: LiveData<String> = _resultList
+
+    init {
+        getPictures()
+    }
 
     private fun setPictureUri(uri: Uri) {
         _pictureUri = uri
@@ -105,5 +116,17 @@ class CardViewModel : ViewModel() {
         _wishResourceId = -1
         _wishData.value = WishDatasource.loadWishes().filter { it.type == cardType }
         _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
+    }
+
+    private fun getPictures() {
+        viewModelScope.launch {
+            try {
+                val result = PictureApi.retrofitService.getPictures()
+                _resultList.value = result.length.toString()
+
+            } catch (e: java.lang.Exception) {
+                _resultList.value = "Error: $e"
+            }
+        }
     }
 }

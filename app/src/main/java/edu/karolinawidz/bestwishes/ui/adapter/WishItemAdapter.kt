@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.adapter
+package edu.karolinawidz.bestwishes.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -47,6 +47,8 @@ class WishItemAdapter(
         notifyItemChanged(previousSelected())
         itemClickListener(getItem(position))
     }
+
+    companion object
 }
 
 object WishAdapterDiff : DiffUtil.ItemCallback<Wish>() {
