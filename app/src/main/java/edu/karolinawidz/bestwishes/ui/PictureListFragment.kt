@@ -50,7 +50,7 @@ class PictureListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         binding.apply {
-            lifecycleOwner = lifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             pictureListFragment = this@PictureListFragment
             viewModel = cardViewModel
         }

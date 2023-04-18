@@ -34,7 +34,7 @@ class WishFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         binding.apply {
-            lifecycleOwner = lifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             wishFragment = this@WishFragment
         }
     }

@@ -41,7 +41,7 @@ class FinalCardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val card = createCard()
         binding.apply {
-            lifecycleOwner = lifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             finalCardFragment = this@FinalCardFragment
             imageFinalPicture.setImageBitmap(card)
         }
