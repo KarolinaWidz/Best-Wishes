@@ -2,7 +2,7 @@ package edu.karolinawidz.bestwishes.data
 
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.model.listItems.Wish
 import java.util.*
 
 object WishDatasource {

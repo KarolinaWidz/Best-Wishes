@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
-import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.model.listItems.Wish
 
 class WishItemAdapter(
     private val context: Context,

@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.model.Picture
-import edu.karolinawidz.bestwishes.model.Wish
+import edu.karolinawidz.bestwishes.model.listItems.Picture
+import edu.karolinawidz.bestwishes.model.listItems.Wish
 import edu.karolinawidz.bestwishes.services.PictureApi
 import kotlinx.coroutines.launch
 import java.util.*
@@ -46,10 +46,6 @@ class CardViewModel : ViewModel() {
 
     private val _resultList = MutableLiveData<String>()
     val resultList: LiveData<String> = _resultList
-
-    init {
-        getPictures()
-    }
 
     private fun setPictureUri(uri: Uri) {
         _pictureUri = uri
@@ -114,15 +110,14 @@ class CardViewModel : ViewModel() {
         _selectedWishId = null
         _pictureUri = null
         _wishResourceId = -1
-        _wishData.value = WishDatasource.loadWishes().filter { it.type == cardType }
+        _wishData.value = WishDatasource.loadWishes().filter { it.type == _cardType }
         _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
     }
 
-    private fun getPictures() {
+    fun getPictures() {
         viewModelScope.launch {
             try {
-                val result = PictureApi.retrofitService.getPictures()
-                _resultList.value = result.length.toString()
+                val result = PictureApi.retrofitService.getPictures(_cardType.name.lowercase())
 
             } catch (e: java.lang.Exception) {
                 _resultList.value = "Error: $e"

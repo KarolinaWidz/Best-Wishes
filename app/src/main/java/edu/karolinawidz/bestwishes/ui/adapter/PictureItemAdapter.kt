@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.karolinawidz.bestwishes.R
-import edu.karolinawidz.bestwishes.model.Picture
+import edu.karolinawidz.bestwishes.model.listItems.Picture
 
 class PictureItemAdapter(
     private val context: Context,

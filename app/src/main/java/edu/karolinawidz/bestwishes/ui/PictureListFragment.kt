@@ -42,7 +42,6 @@ class PictureListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPictureListBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -63,6 +62,7 @@ class PictureListFragment : Fragment() {
     }
 
     private fun initUI() {
+        cardViewModel.getPictures()
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false

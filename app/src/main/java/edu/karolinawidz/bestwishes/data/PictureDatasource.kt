@@ -3,7 +3,7 @@ package edu.karolinawidz.bestwishes.data
 import android.net.Uri
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.model.Picture
+import edu.karolinawidz.bestwishes.model.listItems.Picture
 import java.util.*
 
 const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
