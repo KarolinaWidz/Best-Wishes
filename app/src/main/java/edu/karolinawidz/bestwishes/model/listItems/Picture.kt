@@ -1,13 +1,11 @@
 package edu.karolinawidz.bestwishes.model.listItems
 
 import android.net.Uri
-import androidx.annotation.StringRes
 import edu.karolinawidz.bestwishes.enum.CardType
 
 data class Picture(
     val id: String,
-    @StringRes
-    val stringResourceId: Int,
+    val description: String,
     val imageUri: Uri,
     val type: CardType,
     var isSet: Boolean

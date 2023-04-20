@@ -2,6 +2,7 @@ package edu.karolinawidz.bestwishes.viewModel
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -79,11 +80,18 @@ class CardViewModel : ViewModel() {
         return _wishData.value!!.indexOfFirst { it.isSet }
     }
 
-    fun addNewImage(uri: Uri, stringResourceId: Int) {
+    fun addNewImage(uri: Uri, pictureDescription: String) {
         val newPicture =
-            Picture(UUID.randomUUID().toString(), stringResourceId, uri, _cardType, false)
+            Picture(UUID.randomUUID().toString(), pictureDescription, uri, _cardType, false)
         val currentList = _pictureData.value.orEmpty()
         _pictureData.value = listOf(newPicture) + currentList
+    }
+
+    private fun loadNewImagesFromUrl(url: String?, pictureDescription: String) {
+        url?.let {
+            val imgUri = url.toUri().buildUpon().scheme("https").build()
+            addNewImage(imgUri, pictureDescription)
+        }
     }
 
     fun getImageFromPosition() {
@@ -114,14 +122,18 @@ class CardViewModel : ViewModel() {
         _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
     }
 
-    fun getPictures() {
+    fun loadPicturesFromApi() {
         viewModelScope.launch {
             try {
                 val result = PictureApi.retrofitService.getPictures(_cardType.name.lowercase())
+                for (i in result.photos) {
+                    loadNewImagesFromUrl(i.src.medium, i.alt)
+                }
 
             } catch (e: java.lang.Exception) {
                 _resultList.value = "Error: $e"
             }
         }
     }
+
 }

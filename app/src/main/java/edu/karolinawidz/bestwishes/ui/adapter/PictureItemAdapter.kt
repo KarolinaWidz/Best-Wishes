@@ -39,7 +39,7 @@ class PictureItemAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = getItem(position)
         holder.run {
-            textView.text = context.resources.getString(item.stringResourceId)
+            textView.text = item.description
             Glide.with(context).load(item.imageUri).into(imageView)
             radioButton.isChecked = item.isSet
         }

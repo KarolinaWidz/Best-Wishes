@@ -53,7 +53,6 @@ class PictureListFragment : Fragment() {
             pictureListFragment = this@PictureListFragment
             viewModel = cardViewModel
         }
-
     }
 
     override fun onDestroyView() {
@@ -62,7 +61,7 @@ class PictureListFragment : Fragment() {
     }
 
     private fun initUI() {
-        cardViewModel.getPictures()
+        cardViewModel.loadPicturesFromApi()
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
@@ -96,7 +95,7 @@ class PictureListFragment : Fragment() {
 
     private fun addImageToList(uri: Uri?) {
         uri?.let {
-            cardViewModel.addNewImage(it, R.string.user_image)
+            cardViewModel.addNewImage(it, resources.getString(R.string.user_image))
             binding.recyclerView.postDelayed(
                 { binding.recyclerView.smoothScrollToPosition(0) },
                 1

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.bumptech.glide.Glide
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentWishBinding
 import edu.karolinawidz.bestwishes.ui.adapter.WishItemAdapter
@@ -53,7 +54,7 @@ class WishFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.imagePreviewPicture.setImageURI(cardViewModel.pictureUri)
+        Glide.with(this).load(cardViewModel.pictureUri).into(binding.imagePreviewPicture)
         cardViewModel.wishData.observe(viewLifecycleOwner) { adapter.submitList(it) }
         adapter.itemClickListener = { cardViewModel.wishItemClicked(it) }
         adapter.previousSelected = { cardViewModel.findPreviousWishItemClickedPos() }

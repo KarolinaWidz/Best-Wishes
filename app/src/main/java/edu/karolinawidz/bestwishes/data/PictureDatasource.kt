@@ -1,7 +1,6 @@
 package edu.karolinawidz.bestwishes.data
 
 import android.net.Uri
-import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.model.listItems.Picture
 import java.util.*
@@ -13,126 +12,126 @@ object PictureDatasource {
         return mutableListOf(
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture1,
+                "Cake 1",
                 Uri.parse("$RESOURCE_PATH/birthday1"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture2,
+                "Frog with cake",
                 Uri.parse("$RESOURCE_PATH/birthday2"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture3,
+                "Birthday cake",
                 Uri.parse("$RESOURCE_PATH/birthday3"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture4,
+                "Birthday cupcakes",
                 Uri.parse("$RESOURCE_PATH/birthday4"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture5,
+                "Champagne",
                 Uri.parse("$RESOURCE_PATH/birthday5"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture6,
+                "Gift boxes",
                 Uri.parse("$RESOURCE_PATH/birthday6"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture7,
+                "Birthday cake 2",
                 Uri.parse("$RESOURCE_PATH/birthday7"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture8,
+                "Birthday cake 3",
                 Uri.parse("$RESOURCE_PATH/birthday8"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture9,
+                "Cake 2",
                 Uri.parse("$RESOURCE_PATH/birthday9"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture10,
+                "Gift boxes 2",
                 Uri.parse("$RESOURCE_PATH/birthday10"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture11,
+                "Stones",
                 Uri.parse("$RESOURCE_PATH/birthday11"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture12,
+                "Birthday cake 2",
                 Uri.parse("$RESOURCE_PATH/birthday12"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.birthday_picture13,
+                "Balloons",
                 Uri.parse("$RESOURCE_PATH/birthday13"),
                 CardType.BIRTHDAY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.anniversary_picture1,
+                "Cups",
                 Uri.parse("$RESOURCE_PATH/anniversary1"),
                 CardType.ANNIVERSARY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.anniversary_picture2,
+                "Wedding couple",
                 Uri.parse("$RESOURCE_PATH/anniversary2"),
                 CardType.ANNIVERSARY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.anniversary_picture3,
+                "Elderly couple",
                 Uri.parse("$RESOURCE_PATH/anniversary3"),
                 CardType.ANNIVERSARY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.anniversary_picture4,
+                "Teddy bears",
                 Uri.parse("$RESOURCE_PATH/anniversary4"),
                 CardType.ANNIVERSARY,
                 false
             ),
             Picture(
                 UUID.randomUUID().toString(),
-                R.string.anniversary_picture5,
+                "Sunshine",
                 Uri.parse("$RESOURCE_PATH/anniversary5"),
                 CardType.ANNIVERSARY,
                 false

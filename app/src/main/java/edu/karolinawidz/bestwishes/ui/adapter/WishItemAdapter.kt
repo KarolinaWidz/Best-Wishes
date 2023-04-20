@@ -48,7 +48,6 @@ class WishItemAdapter(
         itemClickListener(getItem(position))
     }
 
-    companion object
 }
 
 object WishAdapterDiff : DiffUtil.ItemCallback<Wish>() {

@@ -3,11 +3,8 @@ package edu.karolinawidz.bestwishes.ui
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +13,16 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
 import edu.karolinawidz.bestwishes.util.PictureGenerator
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlin.system.exitProcess
-
 
 class FinalCardFragment : Fragment() {
 
@@ -50,32 +50,30 @@ class FinalCardFragment : Fragment() {
     fun goToMenuScreen() {
         cardViewModel.clearData()
         findNavController().navigate(R.id.action_finalCardFragment_to_menuFragment)
+
     }
 
     fun exitApp() {
         exitProcess(0)
     }
 
-    private fun createBitmapFromResources(): Bitmap {
-        @Suppress("DEPRECATION") val resultImage: Bitmap =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val src = ImageDecoder.createSource(
-                    requireContext().contentResolver,
-                    cardViewModel.pictureUri
-                )
-                ImageDecoder.decodeBitmap(src)
-            } else {
-                MediaStore.Images.Media.getBitmap(
-                    requireContext().contentResolver,
-                    cardViewModel.pictureUri
-                )
+    private fun loadBitmapFromUri(): Bitmap {
+        var bitmap: Bitmap
+        runBlocking {
+            bitmap = withContext(Dispatchers.IO) {
+                Glide.with(this@FinalCardFragment)
+                    .asBitmap()
+                    .load(cardViewModel.pictureUri)
+                    .submit()
+                    .get()
             }
-        return resultImage.copy(Bitmap.Config.ARGB_8888, true)
+        }
+        return bitmap
     }
 
     private fun createCard(): Bitmap? {
         return PictureGenerator.createCard(
-            createBitmapFromResources(),
+            loadBitmapFromUri(),
             resources.getText(cardViewModel.wishResourceId),
             cardViewModel.cardType.heading,
             ResourcesCompat.getFont(requireContext(), R.font.card_firstschool),
