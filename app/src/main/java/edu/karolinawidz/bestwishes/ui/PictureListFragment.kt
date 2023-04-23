@@ -17,7 +17,6 @@ import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.enum.Position
 import edu.karolinawidz.bestwishes.ui.adapter.PictureItemAdapter
-import edu.karolinawidz.bestwishes.util.PermissionRequest
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
@@ -103,9 +102,4 @@ class PictureListFragment : Fragment() {
             )
         }
     }
-
-    private fun showReadImagePermission() {
-        PermissionRequest.requestReadImagePermission(requireContext(), requireActivity())
-    }
-
 }
