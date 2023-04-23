@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class Data(
     val page: Int,
     @Json(name = "per_page") var perPage: Int,
-    var photos: List<Photos>,
+    var photos: List<Photo>,
     @Json(name = "total_results") val totalResults: Int,
     @Json(name = "next_page") val nextPage: String
 )

@@ -65,7 +65,7 @@ class WishFragment : Fragment() {
             cardViewModel.getWishFromPosition()
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
-            ToastUtil.showNoPictureSelectedToast(requireContext(), R.string.no_wish_selected)
+            ToastUtil.showToast(requireContext(), R.string.no_wish_selected)
         }
     }
 }

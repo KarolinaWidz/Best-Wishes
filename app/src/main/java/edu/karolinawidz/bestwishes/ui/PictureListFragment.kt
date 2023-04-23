@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
+import edu.karolinawidz.bestwishes.enum.Position
 import edu.karolinawidz.bestwishes.ui.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.util.PermissionRequest
 import edu.karolinawidz.bestwishes.util.ToastUtil
@@ -61,7 +62,6 @@ class PictureListFragment : Fragment() {
     }
 
     private fun initUI() {
-        cardViewModel.loadPicturesFromApi()
         val recyclerView = binding.recyclerView
         val itemAnimator = recyclerView.itemAnimator as SimpleItemAnimator
         itemAnimator.supportsChangeAnimations = false
@@ -77,6 +77,7 @@ class PictureListFragment : Fragment() {
         cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
         adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
         adapter.previousSelected = { cardViewModel.findPreviousPictureItemClickedPos() }
+        adapter.loadMore = { cardViewModel.loadPicturesFromApi() }
     }
 
 
@@ -85,7 +86,7 @@ class PictureListFragment : Fragment() {
             cardViewModel.getImageFromPosition()
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
-            ToastUtil.showNoPictureSelectedToast(requireContext(), R.string.no_picture_selected)
+            ToastUtil.showToast(requireContext(), R.string.no_picture_selected)
         }
     }
 
@@ -95,7 +96,7 @@ class PictureListFragment : Fragment() {
 
     private fun addImageToList(uri: Uri?) {
         uri?.let {
-            cardViewModel.addNewImage(it, resources.getString(R.string.user_image))
+            cardViewModel.addNewImage(it, resources.getString(R.string.user_image), Position.TOP)
             binding.recyclerView.postDelayed(
                 { binding.recyclerView.smoothScrollToPosition(0) },
                 1

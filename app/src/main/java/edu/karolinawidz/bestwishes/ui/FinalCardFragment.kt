@@ -92,7 +92,7 @@ class FinalCardFragment : Fragment() {
         try {
             startActivity(chooser)
         } catch (e: ActivityNotFoundException) {
-            ToastUtil.showNoPictureSelectedToast(requireContext(), R.string.cannot_share)
+            ToastUtil.showToast(requireContext(), R.string.cannot_share)
         }
     }
 }

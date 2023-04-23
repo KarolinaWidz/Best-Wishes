@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enum.CardType
+import edu.karolinawidz.bestwishes.enum.Position
 import edu.karolinawidz.bestwishes.model.listItems.Picture
 import edu.karolinawidz.bestwishes.model.listItems.Wish
 import edu.karolinawidz.bestwishes.services.PictureApi
@@ -80,17 +81,20 @@ class CardViewModel : ViewModel() {
         return _wishData.value!!.indexOfFirst { it.isSet }
     }
 
-    fun addNewImage(uri: Uri, pictureDescription: String) {
+    fun addNewImage(uri: Uri, pictureDescription: String, position: Position) {
         val newPicture =
             Picture(UUID.randomUUID().toString(), pictureDescription, uri, _cardType, false)
         val currentList = _pictureData.value.orEmpty()
-        _pictureData.value = listOf(newPicture) + currentList
+        when (position) {
+            Position.TOP -> _pictureData.value = listOf(newPicture) + currentList
+            Position.BOTTOM -> _pictureData.value = currentList + listOf(newPicture)
+        }
     }
 
     private fun loadNewImagesFromUrl(url: String?, pictureDescription: String) {
         url?.let {
             val imgUri = url.toUri().buildUpon().scheme("https").build()
-            addNewImage(imgUri, pictureDescription)
+            addNewImage(imgUri, pictureDescription, Position.BOTTOM)
         }
     }
 
@@ -126,12 +130,12 @@ class CardViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val result = PictureApi.retrofitService.getPictures(_cardType.name.lowercase())
-                for (i in result.photos) {
-                    loadNewImagesFromUrl(i.src.medium, i.alt)
+                for (photo in result.photos) {
+                    loadNewImagesFromUrl(photo.src.medium, photo.alt)
+                    Log.i(TAG, "More images loaded")
                 }
-
             } catch (e: java.lang.Exception) {
-                _resultList.value = "Error: $e"
+                Log.d(TAG, "Cannot load more images: $e")
             }
         }
     }

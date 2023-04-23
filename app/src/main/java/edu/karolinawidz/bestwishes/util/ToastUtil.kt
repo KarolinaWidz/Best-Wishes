@@ -8,9 +8,8 @@ object ToastUtil {
     private const val TOAST_OFFSET_X = 0
     private const val TOAST_OFFSET_Y = 220
 
-    fun showNoPictureSelectedToast(context: Context, stringId: Int) {
-        val text = context.getString(stringId)
-        val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
+    fun showToast(context: Context, stringId: Int) {
+        val toast = Toast.makeText(context, stringId, Toast.LENGTH_SHORT)
         toast.setGravity(
             Gravity.BOTTOM,
             TOAST_OFFSET_X,

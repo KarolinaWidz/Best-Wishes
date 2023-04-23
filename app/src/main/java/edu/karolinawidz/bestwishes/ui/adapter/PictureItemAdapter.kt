@@ -21,6 +21,7 @@ class PictureItemAdapter(
     View.OnClickListener {
 
     lateinit var itemClickListener: (picture: Picture) -> Unit
+    lateinit var loadMore: () -> Unit
     lateinit var previousSelected: () -> Int
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,6 +38,10 @@ class PictureItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        if (position == itemCount - 1) {
+            loadMore()
+        }
+
         val item = getItem(position)
         holder.run {
             textView.text = item.description
