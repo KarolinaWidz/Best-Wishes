@@ -19,6 +19,7 @@ import edu.karolinawidz.bestwishes.enum.Position
 import edu.karolinawidz.bestwishes.ui.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
+import edu.karolinawidz.bestwishes.viewModel.PictureApiStatus
 
 const val PORTRAIT_COLUMNS = 2
 const val LANDSCAPE_COLUMNS = 3
@@ -41,7 +42,11 @@ class PictureListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPictureListBinding.inflate(inflater, container, false)
+        _binding = FragmentPictureListBinding.inflate(
+            inflater,
+            container,
+            false
+        )
         return binding.root
     }
 
@@ -73,12 +78,18 @@ class PictureListFragment : Fragment() {
 
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
 
-        cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
         adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
         adapter.previousSelected = { cardViewModel.findPreviousPictureItemClickedPos() }
         adapter.loadMore = { cardViewModel.loadPicturesFromApi() }
-    }
 
+        cardViewModel.pictureData.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        cardViewModel.status.observe(viewLifecycleOwner) {
+            if (cardViewModel.status.value == PictureApiStatus.ERROR) ToastUtil.showToast(
+                requireContext(),
+                R.string.cannot_load_more_pictures
+            )
+        }
+    }
 
     fun goToNextScreen() {
         if (cardViewModel.selectedPictureId != null) {

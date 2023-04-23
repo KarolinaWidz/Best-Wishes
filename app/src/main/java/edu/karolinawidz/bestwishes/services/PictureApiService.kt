@@ -24,7 +24,7 @@ private val retrofit = Retrofit.Builder()
 interface PictureApiService {
     @Headers("Authorization: $KEY")
     @GET("search")
-    suspend fun getPictures(@Query("query") category: String): Data
+    suspend fun getPictures(@Query("page") page: Int, @Query("query") category: String): Data
 }
 
 object PictureApi {

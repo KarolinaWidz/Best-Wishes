@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_card" />
 
@@ -40,8 +41,8 @@
         android:id="@+id/picture_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
         android:fontFamily="sans-serif-condensed"
+        android:paddingVertical="5dp"
         app:layout_constraintBottom_toBottomOf="@id/picture_radio_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/picture_radio_button"

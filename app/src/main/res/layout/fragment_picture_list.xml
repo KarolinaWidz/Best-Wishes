@@ -17,6 +17,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         tools:context=".ui.PictureListFragment">
 
         <TextView
@@ -31,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:padding="6dp"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constrainedHeight="true"
@@ -47,8 +47,6 @@
             android:id="@+id/next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="5dp"
             android:onClick="@{()-> pictureListFragment.goToNextScreen()}"
             android:text="@string/next"
             app:cornerRadius="15dp"

@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         tools:context=".ui.WishFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/selected_picture"
                 android:importantForAccessibility="yes"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/birthday1" />
 
         </com.google.android.material.card.MaterialCardView>
