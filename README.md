@@ -1,6 +1,6 @@
 
 # Best Wishes
-Mobile application which create greeting cards from chosen picture and wishes.
+Mobile application which creates greeting cards from chosen pictures and wishes.
 - Birthday cards
 - Anniversary cards
 - Load your own photo
