@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bumptech.glide.Glide
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentWishBinding
-import edu.karolinawidz.bestwishes.ui.adapter.WishItemAdapter
+import edu.karolinawidz.bestwishes.ui.recyclerView.adapter.WishItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 

@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.ui.adapter
+package edu.karolinawidz.bestwishes.ui.recyclerView.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import edu.karolinawidz.bestwishes.model.listItems.Picture
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
 import edu.karolinawidz.bestwishes.util.Options
 
 

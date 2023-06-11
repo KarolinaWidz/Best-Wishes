@@ -1,4 +1,3 @@
-
 # Best Wishes
 Mobile application which creates greeting cards from chosen pictures and wishes.
 - Birthday cards
@@ -16,6 +15,7 @@ Mobile application which creates greeting cards from chosen pictures and wishes.
 
 
 ## Technologies
+
 - Kotlin
 - Android
 - XML
@@ -23,6 +23,8 @@ Mobile application which creates greeting cards from chosen pictures and wishes.
 - Navigation component
 - Coroutines
 - Espresso
+- Moshi
+- LiveData
 
 ## Logo
 <a href="https://www.flaticon.com/free-icons/wishes" title="wishes icons">Wishes icons created by Freepik - Flaticon</a>

@@ -38,13 +38,10 @@
     <string name="anniversary_picture5">Sunshine</string>
     <string name="next">Next</string>
     <string name="upload">Upload a photo</string>
-    <string name="title_activity_main2">MainActivity2</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="previous">Previous</string>
     <string name="selected_picture">Selected picture</string>
-    <string name="image_preview">Image preview:</string>
     <string name="final_result_of_card">Final result of card</string>
     <string name="result">Result:</string>
     <string name="happy_birthday_text">Happy Birthday!</string>
@@ -58,7 +55,7 @@
     <string name="exit">Exit</string>
     <string name="create_card">Create Card</string>
     <string name="app_logo">App logo</string>
-    <string name="user_image">User Image</string>
+    <string name="user_picture">User Picture</string>
     <string name="share_title">Share card with</string>
     <string name="no_picture_selected">No picture selected</string>
     <string name="no_wish_selected">No wish selected</string>

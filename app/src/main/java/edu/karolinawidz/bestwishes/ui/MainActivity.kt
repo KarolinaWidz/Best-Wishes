@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes
+package edu.karolinawidz.bestwishes.ui
 
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import edu.karolinawidz.bestwishes.R
 
 const val TAG = "MainActivity"
 

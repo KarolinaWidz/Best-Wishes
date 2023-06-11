@@ -1,9 +1,9 @@
-package edu.karolinawidz.bestwishes.services
+package edu.karolinawidz.bestwishes.network.service
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import edu.karolinawidz.bestwishes.BuildConfig
-import edu.karolinawidz.bestwishes.model.pexels.Data
+import edu.karolinawidz.bestwishes.network.model.Data
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET

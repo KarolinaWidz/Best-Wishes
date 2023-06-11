@@ -2,8 +2,8 @@ package edu.karolinawidz.bestwishes.data
 
 import android.net.Uri
 import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.model.listItems.Picture
-import java.util.*
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
+import java.util.UUID
 
 const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
 

@@ -2,8 +2,8 @@ package edu.karolinawidz.bestwishes.data
 
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.model.listItems.Wish
-import java.util.*
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Wish
+import java.util.UUID
 
 object WishDatasource {
     fun loadWishes(): List<Wish> {

@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.ui.adapter
+package edu.karolinawidz.bestwishes.ui.recyclerView.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.karolinawidz.bestwishes.R
-import edu.karolinawidz.bestwishes.model.listItems.Wish
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Wish
 
 class WishItemAdapter(
     private val context: Context,

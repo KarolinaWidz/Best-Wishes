@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.model.listItems
+package edu.karolinawidz.bestwishes.ui.recyclerView.model
 
 import edu.karolinawidz.bestwishes.enum.CardType
 

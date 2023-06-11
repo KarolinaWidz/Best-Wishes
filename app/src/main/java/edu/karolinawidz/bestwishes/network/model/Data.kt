@@ -1,4 +1,4 @@
-package edu.karolinawidz.bestwishes.model.pexels
+package edu.karolinawidz.bestwishes.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

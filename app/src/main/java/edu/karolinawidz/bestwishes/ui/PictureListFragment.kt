@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.enum.Position
-import edu.karolinawidz.bestwishes.ui.adapter.PictureItemAdapter
+import edu.karolinawidz.bestwishes.ui.recyclerView.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 import edu.karolinawidz.bestwishes.viewModel.PictureApiStatus
@@ -92,8 +92,7 @@ class PictureListFragment : Fragment() {
     }
 
     fun goToNextScreen() {
-        if (cardViewModel.selectedPictureId != null) {
-            cardViewModel.getImageFromPosition()
+        if (cardViewModel.getImageFromPosition()) {
             findNavController().navigate(R.id.action_pictureListFragment_to_wishFragment)
         } else {
             ToastUtil.showToast(requireContext(), R.string.no_picture_selected)
@@ -106,7 +105,7 @@ class PictureListFragment : Fragment() {
 
     private fun addImageToList(uri: Uri?) {
         uri?.let {
-            cardViewModel.addNewImage(it, resources.getString(R.string.user_image), Position.TOP)
+            cardViewModel.addNewImage(it, resources.getString(R.string.user_picture), Position.TOP)
             binding.recyclerView.postDelayed(
                 { binding.recyclerView.smoothScrollToPosition(0) },
                 1

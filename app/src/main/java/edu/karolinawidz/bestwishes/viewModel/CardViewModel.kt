@@ -11,11 +11,11 @@ import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enum.CardType
 import edu.karolinawidz.bestwishes.enum.Position
-import edu.karolinawidz.bestwishes.model.listItems.Picture
-import edu.karolinawidz.bestwishes.model.listItems.Wish
-import edu.karolinawidz.bestwishes.services.PictureApi
+import edu.karolinawidz.bestwishes.network.service.PictureApi
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
+import edu.karolinawidz.bestwishes.ui.recyclerView.model.Wish
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.UUID
 
 private const val TAG = "CardViewModel"
 
@@ -23,7 +23,6 @@ enum class PictureApiStatus { LOADING, ERROR, DONE }
 
 class CardViewModel : ViewModel() {
     private var _selectedPictureId: String? = null
-    val selectedPictureId get() = _selectedPictureId
 
     private var _selectedWishId: String? = null
     val selectedWishId get() = _selectedWishId
@@ -105,13 +104,15 @@ class CardViewModel : ViewModel() {
         }
     }
 
-    fun getImageFromPosition() {
-        try {
+    fun getImageFromPosition(): Boolean {
+        return try {
             Log.i(TAG, "Picture selected")
             _pictureData.value?.first { it.id == _selectedPictureId }
                 ?.let { setPictureUri(it.imageUri) }
+            true
         } catch (e: NoSuchElementException) {
             Log.e(TAG, "No picture selected")
+            false
         }
     }
 
@@ -144,10 +145,10 @@ class CardViewModel : ViewModel() {
                     loadNewImagesFromUrl(photo.src.large, photo.alt)
                     pageNumber++
                     _status.value = PictureApiStatus.DONE
-                    Log.i(TAG, "More images loaded")
+                    Log.i(TAG, "More pictures loaded")
                 }
             } catch (e: java.lang.Exception) {
-                Log.d(TAG, "Cannot load more images: $e")
+                Log.d(TAG, "Cannot load more pictures: $e")
                 _status.value = PictureApiStatus.ERROR
             }
         }
