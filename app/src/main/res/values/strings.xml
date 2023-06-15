@@ -68,5 +68,6 @@
     <string name="pexels_logo">Pexels logo</string>
     <string name="photos_provided_by_pexels">Photos provided by Pexels</string>
     <string name="cannot_load_more_pictures">Cannot load more pictures</string>
+    <string name="picture_saved_in_gallery">Picture saved in gallery</string>
 
 </resources>

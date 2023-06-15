@@ -1,10 +1,12 @@
 package edu.karolinawidz.bestwishes.ui
 
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -36,13 +38,13 @@ class FinalCardFragment : Fragment(R.layout.fragment_final_card) {
             lifecycleOwner = viewLifecycleOwner
             finalCardFragment = this@FinalCardFragment
             imageFinalPicture.setImageBitmap(card)
+            shareButton.setOnClickListener { shareCard(card) }
         }
     }
 
     fun goToMenuScreen() {
         cardViewModel.clearData()
         findNavController().navigate(R.id.action_finalCardFragment_to_menuFragment)
-
     }
 
     fun exitApp() {
@@ -73,7 +75,32 @@ class FinalCardFragment : Fragment(R.layout.fragment_final_card) {
         )
     }
 
-    private fun shareCard(uri: Uri) {
+    private fun shareCard(card: Bitmap?) {
+        card?.let { bitmap -> getBitmapUri(bitmap)?.let { uri -> shareImage(uri) } }
+    }
+
+    private fun getBitmapUri(bitmap: Bitmap): Uri? {
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.TITLE, System.currentTimeMillis())
+            put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis())
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+        }
+
+        val uri = activity?.contentResolver
+            ?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+        uri?.let { imageUri ->
+            activity?.contentResolver?.openOutputStream(imageUri)?.use {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                it.close()
+                ToastUtil.showToast(requireContext(), R.string.picture_saved_in_gallery)
+            }
+        }
+        return uri
+    }
+
+    private fun shareImage(uri: Uri) {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, uri)

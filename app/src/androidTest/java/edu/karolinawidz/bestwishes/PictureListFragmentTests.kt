@@ -12,7 +12,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import edu.karolinawidz.bestwishes.enum.CardType
+import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.ui.PictureListFragment
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 import org.junit.Assert.assertEquals
