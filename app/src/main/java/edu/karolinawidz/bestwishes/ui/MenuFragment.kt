@@ -9,10 +9,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentMenuBinding
-import edu.karolinawidz.bestwishes.enum.CardType
+import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
-class MenuFragment : Fragment() {
+class MenuFragment : Fragment(R.layout.fragment_menu) {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private val cardViewModel: CardViewModel by activityViewModels()
@@ -26,9 +26,9 @@ class MenuFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentMenuBinding.bind(view)
         binding.birthdayCardButton.setOnClickListener { navigateToNext(CardType.BIRTHDAY) }
         binding.anniversaryCardButton.setOnClickListener { navigateToNext(CardType.ANNIVERSARY) }
     }

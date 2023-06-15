@@ -1,7 +1,7 @@
 package edu.karolinawidz.bestwishes.data
 
 import android.net.Uri
-import edu.karolinawidz.bestwishes.enum.CardType
+import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
 import java.util.UUID
 

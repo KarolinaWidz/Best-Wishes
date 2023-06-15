@@ -5,9 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -24,21 +22,15 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlin.system.exitProcess
 
-class FinalCardFragment : Fragment() {
+class FinalCardFragment : Fragment(R.layout.fragment_final_card) {
 
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentFinalCardBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFinalCardBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentFinalCardBinding.bind(view)
         val card = createCard()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -74,7 +66,7 @@ class FinalCardFragment : Fragment() {
     private fun createCard(): Bitmap? {
         return PictureGenerator.createCard(
             loadBitmapFromUri(),
-            resources.getText(cardViewModel.wishResourceId),
+            resources.getText(cardViewModel.getSelectedWish()),
             cardViewModel.cardType.heading,
             ResourcesCompat.getFont(requireContext(), R.font.card_firstschool),
             ContextCompat.getColor(requireContext(), R.color.final_font_color)

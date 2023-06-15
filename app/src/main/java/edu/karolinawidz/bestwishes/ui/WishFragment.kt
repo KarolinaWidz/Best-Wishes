@@ -1,9 +1,7 @@
 package edu.karolinawidz.bestwishes.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,23 +14,16 @@ import edu.karolinawidz.bestwishes.ui.recyclerView.adapter.WishItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
-class WishFragment : Fragment() {
+class WishFragment : Fragment(R.layout.fragment_wish) {
 
     private var _binding: FragmentWishBinding? = null
     private val binding get() = _binding!!
     private val cardViewModel: CardViewModel by activityViewModels()
     private lateinit var adapter: WishItemAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentWishBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentWishBinding.bind(view)
         initUI()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -61,8 +52,7 @@ class WishFragment : Fragment() {
     }
 
     fun goToNextScreen() {
-        if (cardViewModel.selectedWishId != null) {
-            cardViewModel.getWishFromPosition()
+        if (cardViewModel.isWishSelected()) {
             findNavController().navigate(R.id.action_wishFragment_to_finalCardFragment)
         } else {
             ToastUtil.showToast(requireContext(), R.string.no_wish_selected)

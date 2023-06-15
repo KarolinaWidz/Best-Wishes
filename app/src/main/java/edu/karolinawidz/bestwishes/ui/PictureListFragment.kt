@@ -3,9 +3,7 @@ package edu.karolinawidz.bestwishes.ui
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -15,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
-import edu.karolinawidz.bestwishes.enum.Position
+import edu.karolinawidz.bestwishes.enums.Position
 import edu.karolinawidz.bestwishes.ui.recyclerView.adapter.PictureItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
@@ -24,7 +22,7 @@ import edu.karolinawidz.bestwishes.viewModel.PictureApiStatus
 const val PORTRAIT_COLUMNS = 2
 const val LANDSCAPE_COLUMNS = 3
 
-class PictureListFragment : Fragment() {
+class PictureListFragment : Fragment(R.layout.fragment_picture_list) {
 
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentPictureListBinding? = null
@@ -39,19 +37,9 @@ class PictureListFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.GetContent()) { addImageToList(it) }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPictureListBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentPictureListBinding.bind(view)
         initUI()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

@@ -11,35 +11,20 @@
         android:name="edu.karolinawidz.bestwishes.ui.FinalCardFragment"
         android:label="@string/final_results"
         tools:layout="@layout/fragment_final_card">
-        <argument
-            android:name="pictureId"
-            app:argType="integer" />
-        <argument
-            android:name="wishId"
-            app:argType="integer" />
         <action
             android:id="@+id/action_finalCardFragment_to_menuFragment"
             app:destination="@id/menuFragment"
             app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
     </fragment>
     <fragment
         android:id="@+id/wishFragment"
         android:name="edu.karolinawidz.bestwishes.ui.WishFragment"
         android:label="@string/adjust_wishes"
         tools:layout="@layout/fragment_wish">
-        <argument
-            android:name="pictureId"
-            app:argType="integer" />
         <action
             android:id="@+id/action_wishFragment_to_finalCardFragment"
             app:destination="@id/finalCardFragment" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
     </fragment>
     <fragment
         android:id="@+id/pictureListFragment"
@@ -49,9 +34,6 @@
         <action
             android:id="@+id/action_pictureListFragment_to_wishFragment"
             app:destination="@id/wishFragment" />
-        <argument
-            android:name="cardType"
-            app:argType="edu.karolinawidz.bestwishes.enum.CardType" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"

@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.karolinawidz.bestwishes.data.PictureDatasource
 import edu.karolinawidz.bestwishes.data.WishDatasource
-import edu.karolinawidz.bestwishes.enum.CardType
-import edu.karolinawidz.bestwishes.enum.Position
+import edu.karolinawidz.bestwishes.enums.CardType
+import edu.karolinawidz.bestwishes.enums.Position
 import edu.karolinawidz.bestwishes.network.service.PictureApi
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Wish
@@ -25,7 +25,6 @@ class CardViewModel : ViewModel() {
     private var _selectedPictureId: String? = null
 
     private var _selectedWishId: String? = null
-    val selectedWishId get() = _selectedWishId
 
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
@@ -44,20 +43,10 @@ class CardViewModel : ViewModel() {
     private var _pictureUri: Uri? = null
     val pictureUri get() = _pictureUri!!
 
-    private var _wishResourceId = -1
-    val wishResourceId get() = _wishResourceId
-
-    private val _resultList = MutableLiveData<String>()
-    val resultList: LiveData<String> = _resultList
-
     private val _status = MutableLiveData<PictureApiStatus>()
     val status: LiveData<PictureApiStatus> = _status
 
     private var pageNumber = 1
-
-    private fun setPictureUri(uri: Uri) {
-        _pictureUri = uri
-    }
 
     fun setCardType(cardType: CardType) {
         _cardType = cardType
@@ -108,7 +97,7 @@ class CardViewModel : ViewModel() {
         return try {
             Log.i(TAG, "Picture selected")
             _pictureData.value?.first { it.id == _selectedPictureId }
-                ?.let { setPictureUri(it.imageUri) }
+                ?.let { _pictureUri = it.imageUri }
             true
         } catch (e: NoSuchElementException) {
             Log.e(TAG, "No picture selected")
@@ -116,20 +105,21 @@ class CardViewModel : ViewModel() {
         }
     }
 
-    fun getWishFromPosition() {
-        try {
-            Log.i(TAG, "Wish selected")
-            _wishResourceId = _wishData.value?.first { it.id == _selectedWishId }!!.stringResourceId
-        } catch (e: NoSuchElementException) {
-            Log.e(TAG, "No wish selected")
+    fun isWishSelected(): Boolean {
+        _wishData.value?.let {
+            return it.any { wish -> wish.id == _selectedWishId }
         }
+        return false
+    }
+
+    fun getSelectedWish(): Int {
+        return _wishData.value?.first { it.id == _selectedWishId }!!.stringResourceId
     }
 
     fun clearData() {
         _selectedPictureId = null
         _selectedWishId = null
         _pictureUri = null
-        _wishResourceId = -1
         _wishData.value = WishDatasource.loadWishes().filter { it.type == _cardType }
         _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
         pageNumber = 1

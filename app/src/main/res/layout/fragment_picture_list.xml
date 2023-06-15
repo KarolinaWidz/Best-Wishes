@@ -20,13 +20,6 @@
         android:layout_margin="5dp"
         tools:context=".ui.PictureListFragment">
 
-        <TextView
-            android:id="@+id/test_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{viewModel.resultList}"
-            android:textColor="@color/md_theme_dark_errorContainer" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
