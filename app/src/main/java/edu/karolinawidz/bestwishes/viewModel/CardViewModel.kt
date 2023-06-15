@@ -22,9 +22,6 @@ private const val TAG = "CardViewModel"
 enum class PictureApiStatus { LOADING, ERROR, DONE }
 
 class CardViewModel : ViewModel() {
-    private var _selectedPictureId: String? = null
-
-    private var _selectedWishId: String? = null
 
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
@@ -56,7 +53,6 @@ class CardViewModel : ViewModel() {
         val currentList = _pictureData.value.orEmpty()
         currentList.forEach { it.isSet = false }
         currentList.find { it == picture }?.let { it.isSet = true }
-        _selectedPictureId = picture.id
         _pictureData.value = currentList
     }
 
@@ -64,7 +60,6 @@ class CardViewModel : ViewModel() {
         val currentList = _wishData.value.orEmpty()
         currentList.forEach { it.isSet = false }
         currentList.find { it == wish }?.let { it.isSet = true }
-        _selectedWishId = wish.id
         _wishData.value = currentList
     }
 
@@ -96,7 +91,7 @@ class CardViewModel : ViewModel() {
     fun getImageFromPosition(): Boolean {
         return try {
             Log.i(TAG, "Picture selected")
-            _pictureData.value?.first { it.id == _selectedPictureId }
+            _pictureData.value?.first { it.isSet }
                 ?.let { _pictureUri = it.imageUri }
             true
         } catch (e: NoSuchElementException) {
@@ -107,18 +102,16 @@ class CardViewModel : ViewModel() {
 
     fun isWishSelected(): Boolean {
         _wishData.value?.let {
-            return it.any { wish -> wish.id == _selectedWishId }
+            return it.any { wish -> wish.isSet }
         }
         return false
     }
 
     fun getSelectedWish(): Int {
-        return _wishData.value?.first { it.id == _selectedWishId }!!.stringResourceId
+        return _wishData.value?.first { it.isSet }!!.stringResourceId
     }
 
     fun clearData() {
-        _selectedPictureId = null
-        _selectedWishId = null
         _pictureUri = null
         _wishData.value = WishDatasource.loadWishes().filter { it.type == _cardType }
         _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
@@ -143,5 +136,4 @@ class CardViewModel : ViewModel() {
             }
         }
     }
-
 }
