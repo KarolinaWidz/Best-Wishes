@@ -69,5 +69,9 @@
     <string name="photos_provided_by_pexels">Photos provided by Pexels</string>
     <string name="cannot_load_more_pictures">Cannot load more pictures</string>
     <string name="picture_saved_in_gallery">Picture saved in gallery</string>
+    <string name="about">About</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_a_personalized_card_to_express_your_best_wishes">Create a personalized \n card to express your \n best wishes!</string>
+    <string name="choose_category_select_picture_or_add_your_own_adjust_wishes_and_share_card">Choose category, \n select picture \n or add your own, \n adjust wishes, \n and share card!</string>
 
 </resources>

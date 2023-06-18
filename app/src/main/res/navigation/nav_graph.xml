@@ -44,4 +44,9 @@
             android:id="@+id/action_menuFragment_to_pictureListFragment"
             app:destination="@id/pictureListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="edu.karolinawidz.bestwishes.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
 </navigation>
