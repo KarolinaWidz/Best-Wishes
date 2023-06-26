@@ -4,15 +4,7 @@ Mobile application which creates greeting cards from chosen pictures and wishes.
 - Anniversary cards
 - Load your own photo
 
-
-| ![menu](./app_photos/menu.jpg)      |  ![picture list](./app_photos/picture_list.jpg)  |![wish list](./app_photos/wish_list.jpg)|![wish list](./app_photos/wish_list2.jpg)|![final](./app_photos/final.jpg)|
-| --------------------------------------- | --------------------------------------- |--------------------------------------- | ------------------------------ | --------------------------------------- |
-
-
-
-![own photo](./app_photos/own_photo.jpg)
-
-
+![design](./app_photos/Best%20wishes%20design.png)
 
 ## Technologies
 

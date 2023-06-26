@@ -45,10 +45,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 0 && grantResults.isNotEmpty()) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Permission ${grantResults[0]} granted")
-            }
+        if (requestCode == 0 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "Permission ${grantResults[0]} granted")
         }
     }
 }

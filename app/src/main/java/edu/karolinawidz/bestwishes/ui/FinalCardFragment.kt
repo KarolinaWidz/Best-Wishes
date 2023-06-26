@@ -24,7 +24,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlin.system.exitProcess
 
-class FinalCardFragment : Fragment(R.layout.fragment_final_card) {
+class FinalCardFragment :
+    Fragment(R.layout.fragment_final_card) {
 
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentFinalCardBinding? = null

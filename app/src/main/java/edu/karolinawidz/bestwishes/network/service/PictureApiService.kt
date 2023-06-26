@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface PictureApiService {
+fun interface PictureApiService {
     @Headers("Authorization: $KEY")
     @GET("search")
     suspend fun getPictures(@Query("page") page: Int, @Query("query") category: String): Data
