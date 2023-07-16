@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentMenuBinding
 import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
+@AndroidEntryPoint
 class MenuFragment : Fragment(R.layout.fragment_menu) {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!

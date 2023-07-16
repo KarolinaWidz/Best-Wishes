@@ -8,12 +8,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentWishBinding
 import edu.karolinawidz.bestwishes.ui.recyclerView.adapter.WishItemAdapter
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
 
+@AndroidEntryPoint
 class WishFragment : Fragment(R.layout.fragment_wish) {
 
     private var _binding: FragmentWishBinding? = null
@@ -24,11 +26,11 @@ class WishFragment : Fragment(R.layout.fragment_wish) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentWishBinding.bind(view)
-        initUI()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             wishFragment = this@WishFragment
         }
+        initUI()
     }
 
     override fun onDestroyView() {

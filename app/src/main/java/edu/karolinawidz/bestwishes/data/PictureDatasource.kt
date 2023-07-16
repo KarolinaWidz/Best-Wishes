@@ -5,10 +5,10 @@ import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
 import java.util.UUID
 
-const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
+private const val RESOURCE_PATH = "android.resource://edu.karolinawidz.bestwishes/drawable/"
 
-object PictureDatasource {
-    fun loadPictures(): List<Picture> {
+internal object PictureDatasource {
+    internal fun loadPictures(): List<Picture> {
         return mutableListOf(
             Picture(
                 UUID.randomUUID().toString(),

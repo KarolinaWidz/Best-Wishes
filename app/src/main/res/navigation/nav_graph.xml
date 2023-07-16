@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="edu.karolinawidz.bestwishes.AboutFragment"
+        android:name="edu.karolinawidz.bestwishes.ui.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
 </navigation>

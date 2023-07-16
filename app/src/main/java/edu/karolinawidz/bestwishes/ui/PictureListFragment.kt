@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import dagger.hilt.android.AndroidEntryPoint
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentPictureListBinding
 import edu.karolinawidz.bestwishes.enums.Position
@@ -22,6 +23,7 @@ import edu.karolinawidz.bestwishes.viewModel.PictureApiStatus
 const val PORTRAIT_COLUMNS = 2
 const val LANDSCAPE_COLUMNS = 3
 
+@AndroidEntryPoint
 class PictureListFragment : Fragment(R.layout.fragment_picture_list) {
 
     private val cardViewModel: CardViewModel by activityViewModels()
@@ -40,12 +42,12 @@ class PictureListFragment : Fragment(R.layout.fragment_picture_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPictureListBinding.bind(view)
-        initUI()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             pictureListFragment = this@PictureListFragment
             viewModel = cardViewModel
         }
+        initUI()
     }
 
     override fun onDestroyView() {
@@ -65,7 +67,6 @@ class PictureListFragment : Fragment(R.layout.fragment_picture_list) {
             else LANDSCAPE_COLUMNS
 
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
-
         adapter.itemClickListener = { picture -> cardViewModel.pictureItemClicked(picture) }
         adapter.previousSelected = { cardViewModel.findPreviousPictureItemClickedPos() }
         adapter.loadMore = { cardViewModel.loadPicturesFromApi() }

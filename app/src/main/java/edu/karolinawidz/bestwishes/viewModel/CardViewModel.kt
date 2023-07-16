@@ -7,21 +7,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.karolinawidz.bestwishes.data.PictureDatasource
+import edu.karolinawidz.bestwishes.data.PictureRepository
 import edu.karolinawidz.bestwishes.data.WishDatasource
 import edu.karolinawidz.bestwishes.enums.CardType
 import edu.karolinawidz.bestwishes.enums.Position
-import edu.karolinawidz.bestwishes.network.service.PictureApi
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Picture
 import edu.karolinawidz.bestwishes.ui.recyclerView.model.Wish
 import kotlinx.coroutines.launch
 import java.util.UUID
+import javax.inject.Inject
 
 private const val TAG = "CardViewModel"
 
 enum class PictureApiStatus { LOADING, ERROR, DONE }
 
-class CardViewModel : ViewModel() {
+@HiltViewModel
+class CardViewModel @Inject constructor(private val pictureRepository: PictureRepository) :
+    ViewModel() {
 
     private var _cardType = CardType.BIRTHDAY
     val cardType get() = _cardType
@@ -114,7 +118,7 @@ class CardViewModel : ViewModel() {
     fun clearData() {
         _pictureUri = null
         _wishData.value = WishDatasource.loadWishes().filter { it.type == _cardType }
-        _pictureData.value = PictureDatasource.loadPictures().filter { it.type == _cardType }
+        _pictureData.value = pictureRepository.getInitialPicturesWithType(_cardType)
         pageNumber = 1
     }
 
@@ -122,16 +126,13 @@ class CardViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = PictureApiStatus.LOADING
             try {
-                val result =
-                    PictureApi.retrofitService.getPictures(pageNumber, _cardType.name.lowercase())
-                for (photo in result.photos) {
+                val fetchedPictures = pictureRepository.getPicturesWithType(pageNumber, _cardType)
+                for (photo in fetchedPictures) {
                     loadNewImagesFromUrl(photo.src.large, photo.alt)
                     pageNumber++
                     _status.value = PictureApiStatus.DONE
-                    Log.i(TAG, "More pictures loaded")
                 }
             } catch (e: java.lang.Exception) {
-                Log.d(TAG, "Cannot load more pictures: $e")
                 _status.value = PictureApiStatus.ERROR
             }
         }

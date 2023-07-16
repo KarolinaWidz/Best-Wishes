@@ -3,15 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
     id "de.mannodermaus.android-junit5"
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 def apiKeyPropertiesFile = rootProject.file("apiKey.properties")
 def apiKeyProperties = new Properties()
 apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
-apply plugin: 'kotlin-kapt'
 android {
     namespace 'edu.karolinawidz.bestwishes'
-    compileSdk 33
+    compileSdk 34
 
     buildFeatures {
         dataBinding true
@@ -21,7 +22,7 @@ android {
     defaultConfig {
         applicationId "edu.karolinawidz.bestwishes"
         minSdk 23
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -61,9 +62,11 @@ dependencies {
 //    retrofit
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+//    hilt
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-android-compiler:2.44.2'
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.1"
     testImplementation 'org.mockito:mockito-core:5.3.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -72,4 +75,7 @@ dependencies {
     androidTestImplementation 'androidx.navigation:navigation-testing:2.6.0'
     debugImplementation 'androidx.fragment:fragment-testing:1.6.0'
     debugImplementation "androidx.test:monitor:1.6.1"
+}
+kapt {
+    correctErrorTypes = true
 }

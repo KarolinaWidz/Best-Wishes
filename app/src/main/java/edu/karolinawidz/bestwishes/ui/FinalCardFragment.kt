@@ -14,19 +14,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import edu.karolinawidz.bestwishes.R
 import edu.karolinawidz.bestwishes.databinding.FragmentFinalCardBinding
 import edu.karolinawidz.bestwishes.util.PictureGenerator
 import edu.karolinawidz.bestwishes.util.ToastUtil
 import edu.karolinawidz.bestwishes.viewModel.CardViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.system.exitProcess
 
+@AndroidEntryPoint
 class FinalCardFragment :
     Fragment(R.layout.fragment_final_card) {
 
+    @Inject
+    lateinit var ioDispatcher: CoroutineDispatcher
     private val cardViewModel: CardViewModel by activityViewModels()
     private var _binding: FragmentFinalCardBinding? = null
     private val binding get() = _binding!!
@@ -55,7 +60,7 @@ class FinalCardFragment :
     private fun loadBitmapFromUri(): Bitmap {
         var bitmap: Bitmap
         runBlocking {
-            bitmap = withContext(Dispatchers.IO) {
+            bitmap = withContext(ioDispatcher) {
                 Glide.with(this@FinalCardFragment)
                     .asBitmap()
                     .load(cardViewModel.pictureUri)
