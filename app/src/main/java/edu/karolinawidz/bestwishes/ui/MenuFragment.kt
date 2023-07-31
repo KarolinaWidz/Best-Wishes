@@ -35,8 +35,8 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         binding.anniversaryCardButton.setOnClickListener { navigateToNext(CardType.ANNIVERSARY) }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

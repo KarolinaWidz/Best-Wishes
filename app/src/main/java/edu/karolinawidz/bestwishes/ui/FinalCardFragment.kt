@@ -48,6 +48,11 @@ class FinalCardFragment :
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     fun goToMenuScreen() {
         cardViewModel.clearData()
         findNavController().navigate(R.id.action_finalCardFragment_to_menuFragment)
