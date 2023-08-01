@@ -9,9 +9,9 @@
 
     <TextView
         android:id="@+id/about_title"
+        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_black"
         android:text="@string/create_a_personalized_card_to_express_your_best_wishes"
         android:textAlignment="center"
         android:textSize="25sp"
@@ -24,10 +24,10 @@
 
     <TextView
         android:id="@+id/about_description"
+        style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:fontFamily="@font/roboto_condensed_regular"
         android:text="@string/choose_category_select_picture_or_add_your_own_adjust_wishes_and_share_card"
         android:textAlignment="center"
         android:textSize="20sp"
