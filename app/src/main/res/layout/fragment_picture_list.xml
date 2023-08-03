@@ -7,9 +7,6 @@
             name="pictureListFragment"
             type="edu.karolinawidz.bestwishes.ui.PictureListFragment" />
 
-        <variable
-            name="viewModel"
-            type="edu.karolinawidz.bestwishes.viewModel.CardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

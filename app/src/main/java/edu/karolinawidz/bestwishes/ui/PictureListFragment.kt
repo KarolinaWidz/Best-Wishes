@@ -45,7 +45,6 @@ class PictureListFragment : Fragment(R.layout.fragment_picture_list) {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             pictureListFragment = this@PictureListFragment
-            viewModel = cardViewModel
         }
         initUI()
     }
