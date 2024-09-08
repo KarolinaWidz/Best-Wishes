@@ -12,11 +12,9 @@ Mobile application which creates greeting cards from chosen pictures and wishes.
 - Android
 - XML
 - Retrofit
-- Navigation component
 - Coroutines
 - Espresso
 - Moshi
-- LiveData
 - Hilt
 
 ## Logo
